@@ -28,6 +28,7 @@ public class Principal extends javax.swing.JFrame {
     JSONArray cartelera;
     
     
+    
     public Principal() {
         initComponents();
         initComponents(true);
