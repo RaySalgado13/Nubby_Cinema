@@ -13,9 +13,13 @@ import java.awt.GraphicsDevice;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.SwingWorker;
 import org.json.simple.JSONArray;
 
 /**
@@ -26,20 +30,24 @@ public class Principal extends javax.swing.JFrame {
     int cantCartelera;
     ArrayList<JLabel> labelsCartelera;
     JSONArray cartelera;
-    
-    
-    
+
+
     public Principal() {
         initComponents();
         initComponents(true);
+        
     }
     
     private void initComponents(boolean opc){
         this.setExtendedState(JFrame.MAXIMIZED_BOTH); 
         setLocationRelativeTo(null);
-        if(this.getExtendedState() == JFrame.MAXIMIZED_BOTH){
-            this.labelLogo.setIcon(new ImageIcon(new ImageIcon("C:\\Cine\\Nubby_Cinema\\src\\main\\java\\tecnm\\tap\\nubby_cinema\\Resources\\Images\\Logopng.png").getImage().getScaledInstance(100,100, Image.SCALE_SMOOTH)));
-        }
+        labelLogo.setIcon(new ImageIcon(new ImageIcon("C:\\Cine\\Nubby_Cinema\\src\\main\\java\\tecnm\\tap\\nubby_cinema\\Resources\\Images\\LogoFondo.png").getImage().getScaledInstance(100,100, Image.SCALE_AREA_AVERAGING)));
+        labelNavBar.setIcon(new ImageIcon(new ImageIcon("C:\\Cine\\Nubby_Cinema\\src\\main\\java\\tecnm\\tap\\nubby_cinema\\Resources\\Images\\navBar1920.png").getImage().getScaledInstance(1920,100, Image.SCALE_AREA_AVERAGING)));
+               
+        
+            
+        
+        
         
             
     }
@@ -50,13 +58,19 @@ public class Principal extends javax.swing.JFrame {
     private void initComponents() {
 
         navBar = new javax.swing.JPanel();
+        labelNavBar = new javax.swing.JLabel();
         labelLogo = new javax.swing.JLabel();
         panelCartelera = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setSize(new java.awt.Dimension(1920, 1080));
+        addWindowStateListener(new java.awt.event.WindowStateListener() {
+            public void windowStateChanged(java.awt.event.WindowEvent evt) {
+                formWindowStateChanged(evt);
+            }
+        });
 
-        navBar.setBackground(new java.awt.Color(87, 155, 225));
+        navBar.setBackground(new java.awt.Color(205, 76, 76));
         navBar.setPreferredSize(new java.awt.Dimension(960, 80));
 
         javax.swing.GroupLayout navBarLayout = new javax.swing.GroupLayout(navBar);
@@ -65,22 +79,27 @@ public class Principal extends javax.swing.JFrame {
             navBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(navBarLayout.createSequentialGroup()
                 .addComponent(labelLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 860, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 524, Short.MAX_VALUE)
+                .addComponent(labelNavBar, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         navBarLayout.setVerticalGroup(
             navBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(labelLogo, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+            .addComponent(labelNavBar, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+            .addComponent(labelLogo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
+        panelCartelera.setBackground(new java.awt.Color(255, 255, 255));
+        panelCartelera.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         panelCartelera.setForeground(new java.awt.Color(255, 255, 255));
-        panelCartelera.setLayout(new java.awt.GridBagLayout());
+        panelCartelera.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(navBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(panelCartelera, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(navBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -93,6 +112,10 @@ public class Principal extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void formWindowStateChanged(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowStateChanged
+
+    }//GEN-LAST:event_formWindowStateChanged
 
     
     public static void main(String args[]) {
@@ -129,7 +152,9 @@ public class Principal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel labelLogo;
+    private javax.swing.JLabel labelNavBar;
     private javax.swing.JPanel navBar;
     private javax.swing.JPanel panelCartelera;
     // End of variables declaration//GEN-END:variables
+        
 }

@@ -98,6 +98,7 @@ START TRANSACTION;
     );
 COMMIT;
 
+ALTER TABLE peliculas ADD portada BLOB
 
 
 
