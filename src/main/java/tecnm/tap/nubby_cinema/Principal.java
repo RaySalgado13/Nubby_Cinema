@@ -5,6 +5,7 @@
  */
 package tecnm.tap.nubby_cinema;
 
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import javax.swing.JFrame;
@@ -37,12 +38,13 @@ public class Principal extends javax.swing.JFrame {
     ArrayList<JLabel> labelsCartelera;
     JSONArray cartelera;
     JLabel labelReturnSideBar;
+    CardLayout cards;
 
 
     public Principal() {
         initComponents();
         initComponents(true);
-        
+        cards = (CardLayout)(panelCards).getLayout();
     }
     
     private void initComponents(boolean opc){
@@ -50,10 +52,11 @@ public class Principal extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         labelLogo.setIcon(new ImageIcon(new ImageIcon("C:\\Cine\\Nubby_Cinema\\src\\main\\java\\tecnm\\tap\\nubby_cinema\\Resources\\Images\\LogoInicio.png").getImage().getScaledInstance(200,100, Image.SCALE_AREA_AVERAGING)));
         labelNavBar.setIcon(new ImageIcon(new ImageIcon("C:\\Cine\\Nubby_Cinema\\src\\main\\java\\tecnm\\tap\\nubby_cinema\\Resources\\Images\\navBar1920.png").getImage().getScaledInstance(1920,100, Image.SCALE_AREA_AVERAGING)));
-        initCartelera();
+        //initCartelera();
+        cards = (CardLayout)(panelCards.getLayout());
     }
     
-    private void initCartelera(){
+    /*private void initCartelera(){
         JPanel[] arr = new JPanel[5];
         Random ran = new Random();
         for (int i = 0; i < 5; i++) {
@@ -63,7 +66,7 @@ public class Principal extends javax.swing.JFrame {
             cardCartelera.add(arr[i]);
         }
         cardCartelera.repaint();
-    }
+    }*/
     
     private void showLabelOptions(){
         labelReturnSideBar = new javax.swing.JLabel();
@@ -76,8 +79,8 @@ public class Principal extends javax.swing.JFrame {
                 labelReturnSideBarMouseClicked(evt);
             }
         });
-        javax.swing.GroupLayout panelCarteleraLayout = new javax.swing.GroupLayout(panelCartelera);
-        panelCartelera.setLayout(panelCarteleraLayout);
+        javax.swing.GroupLayout panelCarteleraLayout = new javax.swing.GroupLayout(panelOpcionesButton);
+        panelOpcionesButton.setLayout(panelCarteleraLayout);
         panelCarteleraLayout.setHorizontalGroup(
             panelCarteleraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelCarteleraLayout.createSequentialGroup()
@@ -93,6 +96,79 @@ public class Principal extends javax.swing.JFrame {
                 .addContainerGap(427, Short.MAX_VALUE))
         );
     }
+    
+    private void showSideBar(){
+        sidePanel = new javax.swing.JPanel();
+        sidePanel.setBackground(new java.awt.Color(51, 51, 51));
+        sidePanel.setRequestFocusEnabled(false);
+        javax.swing.GroupLayout sidePanelLayout = new javax.swing.GroupLayout(sidePanel);
+        sidePanel.setLayout(sidePanelLayout);
+        sidePanelLayout.setHorizontalGroup(
+            sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(sidePanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(sidePanelLayout.createSequentialGroup()
+                        .addGroup(sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(sidePanelLayout.createSequentialGroup()
+                                .addComponent(panelImage3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(fieldBusqueda, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
+                                    .addComponent(jSeparator1)))
+                            .addGroup(sidePanelLayout.createSequentialGroup()
+                                .addComponent(labelUserIcon)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
+                        .addComponent(labelHideSideBar))
+                    .addComponent(labelPeliculasIcon)
+                    .addGroup(sidePanelLayout.createSequentialGroup()
+                        .addComponent(labelCarteleraIcon)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnCartelera, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        sidePanelLayout.setVerticalGroup(
+            sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(sidePanelLayout.createSequentialGroup()
+                .addGroup(sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(labelHideSideBar)
+                    .addGroup(sidePanelLayout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addGroup(sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(panelImage3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(sidePanelLayout.createSequentialGroup()
+                                .addComponent(fieldBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGap(18, 18, 18)
+                .addGroup(sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(labelUserIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(sidePanelLayout.createSequentialGroup()
+                        .addComponent(labelPeliculasIcon)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(labelCarteleraIcon))
+                    .addComponent(btnCartelera, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(478, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout panelPrincipalLayout = new javax.swing.GroupLayout(panelPrincipal);
+        panelPrincipal.setLayout(panelPrincipalLayout);
+        panelPrincipalLayout.setHorizontalGroup(
+            panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelPrincipalLayout.createSequentialGroup()
+                .addComponent(sidePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 6, Short.MAX_VALUE))
+        );
+        panelPrincipalLayout.setVerticalGroup(
+            panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(sidePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -102,16 +178,20 @@ public class Principal extends javax.swing.JFrame {
         labelNavBar = new javax.swing.JLabel();
         labelLogo = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        panelPrincipal = new javax.swing.JSplitPane();
+        panelPrincipal = new javax.swing.JPanel();
         sidePanel = new javax.swing.JPanel();
-        panelImage1 = new org.edisoncor.gui.panel.PanelImage();
+        panelImage3 = new org.edisoncor.gui.panel.PanelImage();
         labelHideSideBar = new javax.swing.JLabel();
         fieldBusqueda = new javax.swing.JTextField();
         labelUserIcon = new javax.swing.JLabel();
         btnCuenta = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         labelPeliculasIcon = new javax.swing.JLabel();
-        panelCartelera = new javax.swing.JPanel();
+        labelCarteleraIcon = new javax.swing.JLabel();
+        btnCartelera = new javax.swing.JButton();
+        panelOpcionesButton = new javax.swing.JPanel();
+        panelCards = new javax.swing.JPanel();
+        cardPrincipal = new javax.swing.JPanel();
         cardCuenta = new javax.swing.JPanel();
         cardCartelera = new javax.swing.JPanel();
 
@@ -139,6 +219,13 @@ public class Principal extends javax.swing.JFrame {
         navBar.setBackground(new java.awt.Color(205, 76, 76));
         navBar.setPreferredSize(new java.awt.Dimension(960, 80));
 
+        labelLogo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        labelLogo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                labelLogoMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout navBarLayout = new javax.swing.GroupLayout(navBar);
         navBar.setLayout(navBarLayout);
         navBarLayout.setHorizontalGroup(
@@ -148,7 +235,7 @@ public class Principal extends javax.swing.JFrame {
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(labelLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 372, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(labelNavBar, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -165,24 +252,19 @@ public class Principal extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        panelPrincipal.setBackground(new java.awt.Color(51, 51, 51));
-        panelPrincipal.setBorder(null);
-        panelPrincipal.setDividerLocation(300);
-        panelPrincipal.setDividerSize(1);
-
         sidePanel.setBackground(new java.awt.Color(51, 51, 51));
         sidePanel.setRequestFocusEnabled(false);
 
-        panelImage1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tecnm/tap/nubby_cinema/Resources/Images/icons/search_icnon_48px.png"))); // NOI18N
+        panelImage3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tecnm/tap/nubby_cinema/Resources/Images/icons/search_icnon_48px.png"))); // NOI18N
 
-        javax.swing.GroupLayout panelImage1Layout = new javax.swing.GroupLayout(panelImage1);
-        panelImage1.setLayout(panelImage1Layout);
-        panelImage1Layout.setHorizontalGroup(
-            panelImage1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout panelImage3Layout = new javax.swing.GroupLayout(panelImage3);
+        panelImage3.setLayout(panelImage3Layout);
+        panelImage3Layout.setHorizontalGroup(
+            panelImage3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 26, Short.MAX_VALUE)
         );
-        panelImage1Layout.setVerticalGroup(
-            panelImage1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        panelImage3Layout.setVerticalGroup(
+            panelImage3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 26, Short.MAX_VALUE)
         );
 
@@ -203,12 +285,34 @@ public class Principal extends javax.swing.JFrame {
         labelUserIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tecnm/tap/nubby_cinema/Resources/Images/icons/user_male.png"))); // NOI18N
 
         btnCuenta.setBackground(new java.awt.Color(51, 51, 51));
-        btnCuenta.setFont(new java.awt.Font("Leelawadee UI", 0, 12)); // NOI18N
+        btnCuenta.setFont(new java.awt.Font("Leelawadee UI", 0, 18)); // NOI18N
         btnCuenta.setText("Mi cuenta");
         btnCuenta.setBorder(null);
         btnCuenta.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
                 btnCuentaMouseDragged(evt);
+            }
+        });
+        btnCuenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCuentaActionPerformed(evt);
+            }
+        });
+
+        labelCarteleraIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tecnm/tap/nubby_cinema/Resources/Images/icons/cartelera.png"))); // NOI18N
+
+        btnCartelera.setBackground(new java.awt.Color(51, 51, 51));
+        btnCartelera.setFont(new java.awt.Font("Leelawadee UI", 0, 18)); // NOI18N
+        btnCartelera.setText("Ver catálogo");
+        btnCartelera.setBorder(null);
+        btnCartelera.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                btnCarteleraMouseDragged(evt);
+            }
+        });
+        btnCartelera.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCarteleraActionPerformed(evt);
             }
         });
 
@@ -222,7 +326,7 @@ public class Principal extends javax.swing.JFrame {
                     .addGroup(sidePanelLayout.createSequentialGroup()
                         .addGroup(sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(sidePanelLayout.createSequentialGroup()
-                                .addComponent(panelImage1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(panelImage3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(fieldBusqueda, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
@@ -231,9 +335,13 @@ public class Principal extends javax.swing.JFrame {
                                 .addComponent(labelUserIcon)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(labelHideSideBar))
-                    .addComponent(labelPeliculasIcon))
+                    .addComponent(labelPeliculasIcon)
+                    .addGroup(sidePanelLayout.createSequentialGroup()
+                        .addComponent(labelCarteleraIcon)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnCartelera, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         sidePanelLayout.setVerticalGroup(
@@ -244,7 +352,7 @@ public class Principal extends javax.swing.JFrame {
                     .addGroup(sidePanelLayout.createSequentialGroup()
                         .addGap(23, 23, 23)
                         .addGroup(sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(panelImage1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(panelImage3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(sidePanelLayout.createSequentialGroup()
                                 .addComponent(fieldBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -254,46 +362,102 @@ public class Principal extends javax.swing.JFrame {
                     .addComponent(labelUserIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(labelPeliculasIcon)
-                .addContainerGap(520, Short.MAX_VALUE))
+                .addGroup(sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(sidePanelLayout.createSequentialGroup()
+                        .addComponent(labelPeliculasIcon)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(labelCarteleraIcon))
+                    .addComponent(btnCartelera, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        panelPrincipal.setLeftComponent(sidePanel);
+        javax.swing.GroupLayout panelPrincipalLayout = new javax.swing.GroupLayout(panelPrincipal);
+        panelPrincipal.setLayout(panelPrincipalLayout);
+        panelPrincipalLayout.setHorizontalGroup(
+            panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelPrincipalLayout.createSequentialGroup()
+                .addComponent(sidePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 6, Short.MAX_VALUE))
+        );
+        panelPrincipalLayout.setVerticalGroup(
+            panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(sidePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
 
-        panelCartelera.setBackground(new java.awt.Color(255, 255, 255));
-        panelCartelera.setLayout(new java.awt.CardLayout());
+        panelOpcionesButton.setLayout(new java.awt.CardLayout());
+
+        panelCards.setLayout(new java.awt.CardLayout());
+
+        cardPrincipal.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout cardPrincipalLayout = new javax.swing.GroupLayout(cardPrincipal);
+        cardPrincipal.setLayout(cardPrincipalLayout);
+        cardPrincipalLayout.setHorizontalGroup(
+            cardPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 802, Short.MAX_VALUE)
+        );
+        cardPrincipalLayout.setVerticalGroup(
+            cardPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 554, Short.MAX_VALUE)
+        );
+
+        panelCards.add(cardPrincipal, "cardPrincipal");
+
+        cardCuenta.setBackground(new java.awt.Color(153, 255, 0));
+        cardCuenta.setName("cardCuenta"); // NOI18N
 
         javax.swing.GroupLayout cardCuentaLayout = new javax.swing.GroupLayout(cardCuenta);
         cardCuenta.setLayout(cardCuentaLayout);
         cardCuentaLayout.setHorizontalGroup(
             cardCuentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 659, Short.MAX_VALUE)
+            .addGap(0, 802, Short.MAX_VALUE)
         );
         cardCuentaLayout.setVerticalGroup(
             cardCuentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 651, Short.MAX_VALUE)
+            .addGap(0, 554, Short.MAX_VALUE)
         );
 
-        panelCartelera.add(cardCuenta, "card2");
+        panelCards.add(cardCuenta, "cardCuenta");
 
-        cardCartelera.setLayout(new java.awt.GridLayout());
-        panelCartelera.add(cardCartelera, "card3");
+        cardCartelera.setBackground(new java.awt.Color(255, 51, 51));
+        cardCartelera.setName("cardCartelera"); // NOI18N
 
-        panelPrincipal.setRightComponent(panelCartelera);
+        javax.swing.GroupLayout cardCarteleraLayout = new javax.swing.GroupLayout(cardCartelera);
+        cardCartelera.setLayout(cardCarteleraLayout);
+        cardCarteleraLayout.setHorizontalGroup(
+            cardCarteleraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 802, Short.MAX_VALUE)
+        );
+        cardCarteleraLayout.setVerticalGroup(
+            cardCarteleraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 554, Short.MAX_VALUE)
+        );
+
+        panelCards.add(cardCartelera, "cardCartelera");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(navBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(panelPrincipal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .addComponent(navBar, javax.swing.GroupLayout.DEFAULT_SIZE, 1184, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(panelPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panelOpcionesButton, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panelCards, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(navBar, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panelPrincipal))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(panelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panelCards, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(panelOpcionesButton, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
 
         pack();
@@ -304,18 +468,35 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowStateChanged
 
     private void labelHideSideBarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelHideSideBarMouseClicked
-        panelPrincipal.setDividerLocation(0);
+        panelPrincipal.remove(sidePanel);
+        panelPrincipal.repaint();
         showLabelOptions();
     }//GEN-LAST:event_labelHideSideBarMouseClicked
 
     private void btnCuentaMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCuentaMouseDragged
-        btnCuenta.setBackground(Color.BLACK);
+       
     }//GEN-LAST:event_btnCuentaMouseDragged
+
+    private void btnCarteleraMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCarteleraMouseDragged
+       
+    }//GEN-LAST:event_btnCarteleraMouseDragged
+
+    private void btnCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCuentaActionPerformed
+        cards.show(panelCards, "cardCuenta");
+    }//GEN-LAST:event_btnCuentaActionPerformed
+
+    private void btnCarteleraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCarteleraActionPerformed
+        cards.show(panelCards, "cardCartelera");
+    }//GEN-LAST:event_btnCarteleraActionPerformed
+
+    private void labelLogoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelLogoMouseClicked
+        cards.show(panelCards, "cardPrincipal");
+    }//GEN-LAST:event_labelLogoMouseClicked
     
     private void labelReturnSideBarMouseClicked(MouseEvent evt) {
-        panelPrincipal.setDividerLocation(300);
-        panelCartelera.remove(this.labelReturnSideBar);
-        panelCartelera.repaint();
+        showSideBar();
+        panelOpcionesButton.remove(labelReturnSideBar);
+        panelPrincipal.repaint();
     }
 
     public static void main(String args[]) {
@@ -351,22 +532,26 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCartelera;
     private javax.swing.JButton btnCuenta;
     private javax.swing.JPanel cardCartelera;
     private javax.swing.JPanel cardCuenta;
+    private javax.swing.JPanel cardPrincipal;
     private javax.swing.JTextField fieldBusqueda;
     private javax.swing.JInternalFrame jInternalFrame1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JLabel labelCarteleraIcon;
     private javax.swing.JLabel labelHideSideBar;
     private javax.swing.JLabel labelLogo;
     private javax.swing.JLabel labelNavBar;
     private javax.swing.JLabel labelPeliculasIcon;
     private javax.swing.JLabel labelUserIcon;
     private javax.swing.JPanel navBar;
-    private javax.swing.JPanel panelCartelera;
-    private org.edisoncor.gui.panel.PanelImage panelImage1;
-    private javax.swing.JSplitPane panelPrincipal;
+    private javax.swing.JPanel panelCards;
+    private org.edisoncor.gui.panel.PanelImage panelImage3;
+    private javax.swing.JPanel panelOpcionesButton;
+    private javax.swing.JPanel panelPrincipal;
     private javax.swing.JPanel sidePanel;
     // End of variables declaration//GEN-END:variables
         
