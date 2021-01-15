@@ -98,7 +98,13 @@ START TRANSACTION;
     );
 COMMIT;
 
-ALTER TABLE peliculas ADD portada BLOB
+CREATE TABLE cartelera(
+    id_pelicula INT NOT NULL,
+    FOREIGN KEY (id_pelicula) REFERENCES peliculas(id_pelicula)
+);
+
+--ALTER TABLE peliculas ADD portada BLOB
+ALTER TABLE clientes ADD genero CHAR;
 
 
 

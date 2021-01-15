@@ -33,3 +33,4 @@ START TRANSACTION;
 COMMIT;
 
 --UPDATE usuarios SET contrasenia = MD5('123') WHERE id_usuario = 1;
+UPDATE usuarios SET genero = 'H' WHERE id_usuario < 4
