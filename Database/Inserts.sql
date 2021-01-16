@@ -35,4 +35,11 @@ COMMIT;
 --UPDATE usuarios SET contrasenia = MD5('123') WHERE id_usuario = 1;
 UPDATE usuarios SET genero = 'H' WHERE id_usuario < 4;
 
-INSERT INTO clientes VALUES (asdsads,.da.dasdadds, LOAD_FILE("asdsadad"))
+--SELECT clientes.correo, usuarios.usuario FROM clientes INNER JOIN usuarios ON clientes.id_usuario=usuarios.id_usuario;
+-------------------------------------
+--correo        |       usuario
+----------------|--------------------
+--rayfsher@.....|        rayito
+--...           |
+--...           |
+-------------------------------------
