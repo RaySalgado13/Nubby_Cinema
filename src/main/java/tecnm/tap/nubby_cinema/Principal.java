@@ -9,13 +9,12 @@ import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import javax.swing.JFrame;
-import java.awt.GraphicsEnvironment;
-import java.awt.Graphics2D;
-import java.awt.GraphicsDevice;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -29,6 +28,11 @@ import javax.swing.JPanel;
 import javax.swing.SwingWorker;
 import org.edisoncor.gui.panel.Panel;
 import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+//import tecnm.tap.nubby_cinema.Networking.*;
+import com.google.gson.*;
+import com.github.kevinsawicki.http.HttpRequest;
+import org.edisoncor.gui.panel.PanelImage;
 
 /**
  *
@@ -42,7 +46,9 @@ public class Principal extends javax.swing.JFrame {
     CardLayout cards;
     int sliderPosition = 0;
     boolean logedIn = false;
-
+    
+    
+    
     public Principal() {
         setSize(Toolkit.getDefaultToolkit().getScreenSize());
         initComponents();
@@ -50,8 +56,36 @@ public class Principal extends javax.swing.JFrame {
         cards = (CardLayout)(panelCards).getLayout();
     }
     
-    private void initDatosUsuario(){
-    
+    private void initCartelera(){
+        String response = HttpRequest.post("http://localhost:80/Phpfiles/ver_catalogo.php").send("table=peliculas").body();
+        JsonObject jsonRecived = new JsonParser().parse(response).getAsJsonObject();
+        JsonArray cartelera = jsonRecived.get("output").getAsJsonArray();
+        System.out.println(cartelera.get(2).toString());
+        
+        
+        /*JPanel[] arr = new JPanel[5];
+        Random ran = new Random();
+        for (int i = 0; i < 5; i++) {
+            arr[i] = new JPanel();
+            arr[i].setSize(50,50);
+            arr[i].setBackground(new Color(ran.nextInt(256)+1,ran.nextInt(256)+1,ran.nextInt(256)+1));
+            cardCartelera.add(arr[i]);
+        }*/
+        
+        //ArrayList<PanelImage> labelPeliculas = new ArrayList<>();
+        for (int i = 0; i < cartelera.size(); i++) {
+            JsonObject pelicula = cartelera.get(i).getAsJsonObject();
+            JLabel portada = new JLabel();
+            portada.setSize(215, 319);
+            String a = pelicula.get("nombre_pelicula").toString();
+            String b = a.substring(1,a.length()-1);
+            portada.setIcon(new ImageIcon("C:\\Cine\\Nubby_Cinema\\src\\main\\java\\tecnm\\tap\\nubby_cinema\\Resources\\Images\\Portadas Peliculas\\"+b+".png"));
+            
+            
+            
+            cardCartelera.add(portada);
+        }
+        cardCartelera.repaint();
     }
     
     private void initComponents(boolean opc){
@@ -59,22 +93,14 @@ public class Principal extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         labelLogo.setIcon(new ImageIcon(new ImageIcon("C:\\Cine\\Nubby_Cinema\\src\\main\\java\\tecnm\\tap\\nubby_cinema\\Resources\\Images\\LogoInicio.png").getImage().getScaledInstance(200,100, Image.SCALE_AREA_AVERAGING)));
         labelNavBar.setIcon(new ImageIcon(new ImageIcon("C:\\Cine\\Nubby_Cinema\\src\\main\\java\\tecnm\\tap\\nubby_cinema\\Resources\\Images\\navBar1920.png").getImage().getScaledInstance(1920,100, Image.SCALE_AREA_AVERAGING)));
-        //initCartelera();
         cards = (CardLayout)(panelCards.getLayout());
-        
+        initCartelera();
         
     }
     
+    
     /*private void initCartelera(){
-        JPanel[] arr = new JPanel[5];
-        Random ran = new Random();
-        for (int i = 0; i < 5; i++) {
-            arr[i] = new JPanel();
-            arr[i].setSize(50,50);
-            arr[i].setBackground(new Color(ran.nextInt(256)+1,ran.nextInt(256)+1,ran.nextInt(256)+1));
-            cardCartelera.add(arr[i]);
-        }
-        cardCartelera.repaint();
+        
     }*/
     
     /*private String[] takeImage(){
@@ -91,6 +117,8 @@ public class Principal extends javax.swing.JFrame {
         Image image = icon.getImage().getScaledInstance(slider.getWidth(), slider.getHeight(), Image.SCALE_SMOOTH);
         slider.setIcon(new ImageIcon(image));
     }*/
+    
+    
     
     private void showLabelOptions(){
         labelReturnSideBar = new javax.swing.JLabel();
@@ -238,12 +266,13 @@ public class Principal extends javax.swing.JFrame {
         slider = new javax.swing.JLabel();
         labelRight = new javax.swing.JLabel();
         labelLeft = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
+        labelFacebook = new javax.swing.JLabel();
+        labelTwitter = new javax.swing.JLabel();
+        labelInstagram = new javax.swing.JLabel();
+        labelPlayStore = new javax.swing.JLabel();
+        labelPeli1 = new javax.swing.JLabel();
+        labelPeli2 = new javax.swing.JLabel();
+        labelPeli3 = new javax.swing.JLabel();
         cardCuenta = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -259,7 +288,6 @@ public class Principal extends javax.swing.JFrame {
         btnLogin = new javax.swing.JButton();
         jLabel15 = new javax.swing.JLabel();
         labelRegistro = new javax.swing.JLabel();
-        cardCartelera = new javax.swing.JPanel();
         cardRegistro = new javax.swing.JPanel();
         jLabel17 = new javax.swing.JLabel();
         fieldUsuarioSignUp = new javax.swing.JTextField();
@@ -296,6 +324,7 @@ public class Principal extends javax.swing.JFrame {
         cardAcceso = new javax.swing.JTabbedPane();
         panelInfoGeneral = new javax.swing.JPanel();
         panelHistorialCompras = new javax.swing.JPanel();
+        cardCartelera = new javax.swing.JPanel();
 
         jInternalFrame1.setVisible(true);
 
@@ -303,11 +332,11 @@ public class Principal extends javax.swing.JFrame {
         jInternalFrame1.getContentPane().setLayout(jInternalFrame1Layout);
         jInternalFrame1Layout.setHorizontalGroup(
             jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 222, Short.MAX_VALUE)
         );
         jInternalFrame1Layout.setVerticalGroup(
             jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 219, Short.MAX_VALUE)
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -543,42 +572,49 @@ public class Principal extends javax.swing.JFrame {
 
         labelLeft.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tecnm/tap/nubby_cinema/Resources/Images/icons/icons8_left_angle_parentheses_key_48px.png"))); // NOI18N
 
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tecnm/tap/nubby_cinema/Resources/Images/icons/icons8_facebook_circled_48px.png"))); // NOI18N
+        labelFacebook.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tecnm/tap/nubby_cinema/Resources/Images/icons/icons8_facebook_circled_48px.png"))); // NOI18N
 
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tecnm/tap/nubby_cinema/Resources/Images/icons/icons8_twitter_squared_48px.png"))); // NOI18N
+        labelTwitter.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tecnm/tap/nubby_cinema/Resources/Images/icons/icons8_twitter_squared_48px.png"))); // NOI18N
 
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tecnm/tap/nubby_cinema/Resources/Images/icons/icons8_instagram_48px.png"))); // NOI18N
+        labelInstagram.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tecnm/tap/nubby_cinema/Resources/Images/icons/icons8_instagram_48px.png"))); // NOI18N
 
-        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tecnm/tap/nubby_cinema/Resources/Images/icons/icons8_google_play_48px.png"))); // NOI18N
+        labelPlayStore.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tecnm/tap/nubby_cinema/Resources/Images/icons/icons8_google_play_48px.png"))); // NOI18N
+
+        labelPeli1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tecnm/tap/nubby_cinema/Resources/Images/Portadas Peliculas/Mujer Maravilla 1984.png"))); // NOI18N
+
+        labelPeli2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tecnm/tap/nubby_cinema/Resources/Images/Portadas Peliculas/Estación Zombie 2 Península.png"))); // NOI18N
+
+        labelPeli3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tecnm/tap/nubby_cinema/Resources/Images/Portadas Peliculas/El Tiempo Contigo.png"))); // NOI18N
 
         javax.swing.GroupLayout cardPrincipalLayout = new javax.swing.GroupLayout(cardPrincipal);
         cardPrincipal.setLayout(cardPrincipalLayout);
         cardPrincipalLayout.setHorizontalGroup(
             cardPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(cardPrincipalLayout.createSequentialGroup()
-                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(85, 85, 85)
+                .addGap(45, 45, 45)
                 .addGroup(cardPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(cardPrincipalLayout.createSequentialGroup()
-                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(cardPrincipalLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
-            .addGroup(cardPrincipalLayout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addComponent(labelLeft, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(slider, javax.swing.GroupLayout.PREFERRED_SIZE, 516, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(labelRight, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE))
+                        .addComponent(labelFacebook, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(labelTwitter, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(labelInstagram, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(labelPlayStore, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(cardPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(cardPrincipalLayout.createSequentialGroup()
+                            .addComponent(labelLeft)
+                            .addGap(18, 18, 18)
+                            .addComponent(slider)
+                            .addGap(18, 18, 18)
+                            .addComponent(labelRight))
+                        .addGroup(cardPrincipalLayout.createSequentialGroup()
+                            .addComponent(labelPeli1)
+                            .addGap(45, 45, 45)
+                            .addComponent(labelPeli2)
+                            .addGap(45, 45, 45)
+                            .addComponent(labelPeli3))))
+                .addContainerGap(66, Short.MAX_VALUE))
         );
         cardPrincipalLayout.setVerticalGroup(
             cardPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -586,21 +622,22 @@ public class Principal extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(cardPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(slider, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelLeft, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelRight, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 373, Short.MAX_VALUE)
-                .addGroup(cardPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(labelRight, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(cardPrincipalLayout.createSequentialGroup()
-                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                    .addGroup(cardPrincipalLayout.createSequentialGroup()
-                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(cardPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addGap(10, 10, 10)
+                        .addComponent(labelLeft, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(134, 134, 134)
+                .addGroup(cardPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(labelPeli1)
+                    .addComponent(labelPeli2)
+                    .addComponent(labelPeli3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
+                .addGroup(cardPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(labelFacebook, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelTwitter, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelInstagram, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelPlayStore, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         panelCards.add(cardPrincipal, "cardPrincipal");
@@ -671,22 +708,20 @@ public class Principal extends javax.swing.JFrame {
                             .addComponent(jLabel2))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(cardCuentaLayout.createSequentialGroup()
-                        .addGroup(cardCuentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(cardCuentaLayout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(btnLogin))
+                        .addGroup(cardCuentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(cardCuentaLayout.createSequentialGroup()
                                 .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(cardCuentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jSeparator3, javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(cardCuentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jLabel12)
                                     .addGroup(cardCuentaLayout.createSequentialGroup()
                                         .addComponent(jLabel15)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(labelRegistro))
-                                    .addComponent(fieldContraseniaLogIn, javax.swing.GroupLayout.PREFERRED_SIZE, 439, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(fieldContraseniaLogIn, javax.swing.GroupLayout.DEFAULT_SIZE, 439, Short.MAX_VALUE)
+                                    .addComponent(jSeparator3)))
+                            .addComponent(btnLogin))
+                        .addGap(18, 137, Short.MAX_VALUE)
                         .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(196, 196, 196))
         );
@@ -714,34 +749,18 @@ public class Principal extends javax.swing.JFrame {
                 .addGroup(cardCuentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(fieldContraseniaLogIn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(9, 9, 9)
-                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
+                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 8, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnLogin)
-                .addGap(166, 166, 166)
+                .addGap(160, 160, 160)
                 .addGroup(cardCuentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel15)
                     .addComponent(labelRegistro))
-                .addContainerGap(82, Short.MAX_VALUE))
+                .addContainerGap(167, Short.MAX_VALUE))
         );
 
         panelCards.add(cardCuenta, "cardCuenta");
-
-        cardCartelera.setBackground(new java.awt.Color(255, 51, 51));
-        cardCartelera.setName("cardCartelera"); // NOI18N
-
-        javax.swing.GroupLayout cardCarteleraLayout = new javax.swing.GroupLayout(cardCartelera);
-        cardCartelera.setLayout(cardCarteleraLayout);
-        cardCarteleraLayout.setHorizontalGroup(
-            cardCarteleraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 846, Short.MAX_VALUE)
-        );
-        cardCarteleraLayout.setVerticalGroup(
-            cardCarteleraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 671, Short.MAX_VALUE)
-        );
-
-        panelCards.add(cardCartelera, "cardCartelera");
 
         cardRegistro.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -959,7 +978,7 @@ public class Principal extends javax.swing.JFrame {
                 .addComponent(jSeparator9, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnRegistro)
-                .addContainerGap(55, Short.MAX_VALUE))
+                .addContainerGap(147, Short.MAX_VALUE))
         );
 
         panelCards.add(cardRegistro, "cardRegistro");
@@ -972,7 +991,7 @@ public class Principal extends javax.swing.JFrame {
         );
         panelInfoGeneralLayout.setVerticalGroup(
             panelInfoGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 645, Short.MAX_VALUE)
+            .addGap(0, 737, Short.MAX_VALUE)
         );
 
         cardAcceso.addTab("Informacion de la cuenta", panelInfoGeneral);
@@ -985,12 +1004,16 @@ public class Principal extends javax.swing.JFrame {
         );
         panelHistorialComprasLayout.setVerticalGroup(
             panelHistorialComprasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 645, Short.MAX_VALUE)
+            .addGap(0, 737, Short.MAX_VALUE)
         );
 
         cardAcceso.addTab("Historial de compas", panelHistorialCompras);
 
         panelCards.add(cardAcceso, "card6");
+
+        cardCartelera.setBackground(new java.awt.Color(255, 255, 255));
+        cardCartelera.setLayout(new java.awt.GridLayout(4, 6));
+        panelCards.add(cardCartelera, "cardCartelera");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -1088,9 +1111,34 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_labelRightMouseClicked
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-        // TODO add your handling code here:
+
+        String response = HttpRequest.post("http://localhost:80/Phpfiles/encuentra_usuario.php").send("usuario="+fieldUsuarioLogIn.getText().toLowerCase()+"&clave="+fieldContraseniaLogIn.getText()).body();
+        JsonObject jsonRecived = new JsonParser().parse(response).getAsJsonObject();
+        try{
+            JsonObject output = jsonRecived.get("output").getAsJsonObject();
+            JsonObject datosUsuario = output.get("0").getAsJsonObject();
+            JOptionPane.showMessageDialog(null,"Inicio correcto");
+            System.out.println(datosUsuario.get("usuario"));
+            System.out.println(datosUsuario.get("contrasenia"));
+            
+            cargarUsuario(datosUsuario);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            System.out.println(jsonRecived.toString());
+            JOptionPane.showMessageDialog(null,"Usuario y/o contraseña incorrecta");
+        }
+        
+        
+        
+        
     }//GEN-LAST:event_btnLoginActionPerformed
 
+    private void cargarUsuario(JsonObject datosUsuario) {
+        //cargar datos del usuario al card acceso
+    }
+    
+    
     private void btnRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistroActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnRegistroActionPerformed
@@ -1188,12 +1236,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
@@ -1205,16 +1247,23 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator9;
     private javax.swing.JLabel labelCarteleraIcon;
     private javax.swing.JLabel labelClose;
+    private javax.swing.JLabel labelFacebook;
     private javax.swing.JLabel labelHideSideBar;
+    private javax.swing.JLabel labelInstagram;
     private javax.swing.JLabel labelLeft;
     private javax.swing.JLabel labelLogo;
     private javax.swing.JLabel labelMaximize;
     private javax.swing.JLabel labelMinimize;
     private javax.swing.JLabel labelNavBar;
+    private javax.swing.JLabel labelPeli1;
+    private javax.swing.JLabel labelPeli2;
+    private javax.swing.JLabel labelPeli3;
     private javax.swing.JLabel labelPeliculasIcon;
+    private javax.swing.JLabel labelPlayStore;
     private javax.swing.JLabel labelRegistro;
     private javax.swing.JLabel labelRight;
     private javax.swing.JLabel labelToLogin;
+    private javax.swing.JLabel labelTwitter;
     private javax.swing.JLabel labelUserIcon;
     private javax.swing.JPanel navBar;
     private javax.swing.JPanel panelCards;
@@ -1226,5 +1275,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JPanel sidePanel;
     private javax.swing.JLabel slider;
     // End of variables declaration//GEN-END:variables
+
+    
         
 }

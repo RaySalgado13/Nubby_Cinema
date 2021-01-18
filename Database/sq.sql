@@ -45,9 +45,10 @@ START TRANSACTION;
         FOREIGN KEY (id_sala) REFERENCES salas(id_sala),
         FOREIGN KEY (id_pelicula) REFERENCES peliculas(id_pelicula)
     );
-
+    
     CREATE TABLE boletos(
-        id_boleto INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        id_boleto BIGINT UNSIGNED NOT NULL PRIMARY KEY, --(id_sucursal)(DDMMAA)(id_pelicula)(id_sala)(fila[0-5])(asiento)
+                                                        --216012153518
         id_funcion INT NOT NULL,
         id_usuario INT NOT NULL,
         asiento VARCHAR(3) NOT NULL,
@@ -55,5 +56,18 @@ START TRANSACTION;
 
         FOREIGN KEY (id_funcion) REFERENCES funciones(id_funcion),
         FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario) 
+    );
+
+    CREATE TABLE sucursales(
+        id_sucursal INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        nombre VARCHAR(100) NOT NULL
+    );
+
+    CREATE TABLE sucursales_has_funciones(
+        id_sucursal INT NOT NULL,
+        id_funcion INT NOT NULL,
+
+        FOREIGN KEY (id_sucursal) REFERENCES sucursales(id_sucursal)
+        FOREIGN KEY (id_funcion) REFERENCES funciones(id_funcion)
     );
 COMMIT;
