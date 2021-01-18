@@ -32,6 +32,7 @@ import org.json.simple.JSONObject;
 //import tecnm.tap.nubby_cinema.Networking.*;
 import com.google.gson.*;
 import com.github.kevinsawicki.http.HttpRequest;
+import javax.swing.JScrollPane;
 import org.edisoncor.gui.panel.PanelImage;
 
 /**
@@ -60,19 +61,9 @@ public class Principal extends javax.swing.JFrame {
         String response = HttpRequest.post("http://localhost:80/Phpfiles/ver_catalogo.php").send("table=peliculas").body();
         JsonObject jsonRecived = new JsonParser().parse(response).getAsJsonObject();
         JsonArray cartelera = jsonRecived.get("output").getAsJsonArray();
-        System.out.println(cartelera.get(2).toString());
+        jsp.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        jsp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
         
-        
-        /*JPanel[] arr = new JPanel[5];
-        Random ran = new Random();
-        for (int i = 0; i < 5; i++) {
-            arr[i] = new JPanel();
-            arr[i].setSize(50,50);
-            arr[i].setBackground(new Color(ran.nextInt(256)+1,ran.nextInt(256)+1,ran.nextInt(256)+1));
-            cardCartelera.add(arr[i]);
-        }*/
-        
-        //ArrayList<PanelImage> labelPeliculas = new ArrayList<>();
         for (int i = 0; i < cartelera.size(); i++) {
             JsonObject pelicula = cartelera.get(i).getAsJsonObject();
             JLabel portada = new JLabel();
@@ -83,8 +74,10 @@ public class Principal extends javax.swing.JFrame {
             
             
             
-            cardCartelera.add(portada);
+            panelPeliculas.add(portada);
         }
+        
+        
         cardCartelera.repaint();
     }
     
@@ -325,6 +318,8 @@ public class Principal extends javax.swing.JFrame {
         panelInfoGeneral = new javax.swing.JPanel();
         panelHistorialCompras = new javax.swing.JPanel();
         cardCartelera = new javax.swing.JPanel();
+        jsp = new javax.swing.JScrollPane();
+        panelPeliculas = new org.edisoncor.gui.panel.PanelImage();
 
         jInternalFrame1.setVisible(true);
 
@@ -1011,8 +1006,21 @@ public class Principal extends javax.swing.JFrame {
 
         panelCards.add(cardAcceso, "card6");
 
-        cardCartelera.setBackground(new java.awt.Color(255, 255, 255));
-        cardCartelera.setLayout(new java.awt.GridLayout(4, 6));
+        panelPeliculas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tecnm/tap/nubby_cinema/Resources/Images/fondoCartelera1080.png"))); // NOI18N
+        panelPeliculas.setLayout(new java.awt.GridLayout());
+        jsp.setViewportView(panelPeliculas);
+
+        javax.swing.GroupLayout cardCarteleraLayout = new javax.swing.GroupLayout(cardCartelera);
+        cardCartelera.setLayout(cardCarteleraLayout);
+        cardCarteleraLayout.setHorizontalGroup(
+            cardCarteleraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jsp, javax.swing.GroupLayout.DEFAULT_SIZE, 846, Short.MAX_VALUE)
+        );
+        cardCarteleraLayout.setVerticalGroup(
+            cardCarteleraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jsp, javax.swing.GroupLayout.DEFAULT_SIZE, 763, Short.MAX_VALUE)
+        );
+
         panelCards.add(cardCartelera, "cardCartelera");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -1245,6 +1253,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator7;
     private javax.swing.JSeparator jSeparator8;
     private javax.swing.JSeparator jSeparator9;
+    private javax.swing.JScrollPane jsp;
     private javax.swing.JLabel labelCarteleraIcon;
     private javax.swing.JLabel labelClose;
     private javax.swing.JLabel labelFacebook;
@@ -1271,6 +1280,7 @@ public class Principal extends javax.swing.JFrame {
     private org.edisoncor.gui.panel.PanelImage panelImage3;
     private javax.swing.JPanel panelInfoGeneral;
     private javax.swing.JPanel panelOpcionesButton;
+    private org.edisoncor.gui.panel.PanelImage panelPeliculas;
     private javax.swing.JPanel panelPrincipal;
     private javax.swing.JPanel sidePanel;
     private javax.swing.JLabel slider;
