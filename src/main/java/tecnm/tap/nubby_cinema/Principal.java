@@ -32,6 +32,15 @@ import org.json.simple.JSONObject;
 //import tecnm.tap.nubby_cinema.Networking.*;
 import com.google.gson.*;
 import com.github.kevinsawicki.http.HttpRequest;
+import java.awt.Cursor;
+import java.awt.Graphics2D;
+import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import javax.swing.JScrollPane;
 import org.edisoncor.gui.panel.PanelImage;
 
@@ -47,6 +56,7 @@ public class Principal extends javax.swing.JFrame {
     CardLayout cards;
     int sliderPosition = 0;
     boolean logedIn = false;
+    JsonObject usuario;
     
     
     
@@ -71,23 +81,36 @@ public class Principal extends javax.swing.JFrame {
             String a = pelicula.get("nombre_pelicula").toString();
             String b = a.substring(1,a.length()-1);
             portada.setIcon(new ImageIcon("C:\\Cine\\Nubby_Cinema\\src\\main\\java\\tecnm\\tap\\nubby_cinema\\Resources\\Images\\Portadas Peliculas\\"+b+".png"));
-            
-            
+            portada.setCursor(new Cursor(HAND_CURSOR));
+            portada.addMouseListener(new PortadaListener(i, portada, pelicula));
             
             panelPeliculas.add(portada);
         }
-        
-        
+
         cardCartelera.repaint();
     }
     
     private void initComponents(boolean opc){
-        //this.setExtendedState(JFrame.MAXIMIZED_BOTH); 
         setLocationRelativeTo(null);
         labelLogo.setIcon(new ImageIcon(new ImageIcon("C:\\Cine\\Nubby_Cinema\\src\\main\\java\\tecnm\\tap\\nubby_cinema\\Resources\\Images\\LogoInicio.png").getImage().getScaledInstance(200,100, Image.SCALE_AREA_AVERAGING)));
         labelNavBar.setIcon(new ImageIcon(new ImageIcon("C:\\Cine\\Nubby_Cinema\\src\\main\\java\\tecnm\\tap\\nubby_cinema\\Resources\\Images\\navBar1920.png").getImage().getScaledInstance(1920,100, Image.SCALE_AREA_AVERAGING)));
         cards = (CardLayout)(panelCards.getLayout());
         initCartelera();
+        CheckSession();
+    }
+    
+    private void CheckSession(){
+        try {
+            File loged = new File("loged.json");
+            if(loged.exists()){
+                String datosUsuario = new String(Files.readAllBytes(Paths.get("loged.json")));
+                JsonObject jsonReaded = new JsonParser().parse(datosUsuario).getAsJsonObject();
+                this.usuario = jsonReaded;
+                cargarUsuario(usuario,true);
+                
+            }
+        } catch (Exception e) {
+        }
         
     }
     
@@ -281,6 +304,7 @@ public class Principal extends javax.swing.JFrame {
         btnLogin = new javax.swing.JButton();
         jLabel15 = new javax.swing.JLabel();
         labelRegistro = new javax.swing.JLabel();
+        boxSesion = new javax.swing.JCheckBox();
         cardRegistro = new javax.swing.JPanel();
         jLabel17 = new javax.swing.JLabel();
         fieldUsuarioSignUp = new javax.swing.JTextField();
@@ -316,10 +340,46 @@ public class Principal extends javax.swing.JFrame {
         labelToLogin = new javax.swing.JLabel();
         cardAcceso = new javax.swing.JTabbedPane();
         panelInfoGeneral = new javax.swing.JPanel();
+        panelImage1 = new org.edisoncor.gui.panel.PanelImage();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        fieldUsuarioAcceso = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        fieldNombreAcceso = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        fieldApellidosAcceso = new javax.swing.JTextField();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel35 = new javax.swing.JLabel();
+        fieldCorreoAcceso = new javax.swing.JTextField();
+        jLabel36 = new javax.swing.JLabel();
+        fieldCelularAcceso = new javax.swing.JTextField();
+        jLabel37 = new javax.swing.JLabel();
+        jSeparator10 = new javax.swing.JSeparator();
+        jSeparator12 = new javax.swing.JSeparator();
+        jSeparator13 = new javax.swing.JSeparator();
+        jSeparator14 = new javax.swing.JSeparator();
+        jSeparator15 = new javax.swing.JSeparator();
+        labelDisconnect = new javax.swing.JLabel();
+        jLabel38 = new javax.swing.JLabel();
         panelHistorialCompras = new javax.swing.JPanel();
         cardCartelera = new javax.swing.JPanel();
         jsp = new javax.swing.JScrollPane();
         panelPeliculas = new org.edisoncor.gui.panel.PanelImage();
+        cardPelicula = new javax.swing.JPanel();
+        bannerPelicula = new org.edisoncor.gui.panel.PanelImage();
+        panelsPelicula = new javax.swing.JTabbedPane();
+        panelSinopsis = new javax.swing.JPanel();
+        labelNombrePelicula = new javax.swing.JLabel();
+        labelDirectorPelicula = new javax.swing.JLabel();
+        labelDuracionPelicula = new javax.swing.JLabel();
+        labelCategoriaPelicula = new javax.swing.JLabel();
+        labelGenero = new javax.swing.JLabel();
+        jLabel43 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        areaSinopsis = new javax.swing.JTextArea();
+        panelHorarios = new javax.swing.JPanel();
 
         jInternalFrame1.setVisible(true);
 
@@ -609,7 +669,7 @@ public class Principal extends javax.swing.JFrame {
                             .addComponent(labelPeli2)
                             .addGap(45, 45, 45)
                             .addComponent(labelPeli3))))
-                .addContainerGap(66, Short.MAX_VALUE))
+                .addContainerGap(129, Short.MAX_VALUE))
         );
         cardPrincipalLayout.setVerticalGroup(
             cardPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -626,7 +686,7 @@ public class Principal extends javax.swing.JFrame {
                     .addComponent(labelPeli1)
                     .addComponent(labelPeli2)
                     .addComponent(labelPeli3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(cardPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(labelFacebook, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelTwitter, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -650,7 +710,6 @@ public class Principal extends javax.swing.JFrame {
         jLabel12.setText("Ingrese contraseña");
 
         fieldContraseniaLogIn.setFont(new java.awt.Font("Leelawadee UI", 0, 18)); // NOI18N
-        fieldContraseniaLogIn.setText("jPasswordField2");
         fieldContraseniaLogIn.setBorder(null);
 
         fieldUsuarioLogIn.setFont(new java.awt.Font("Leelawadee UI", 0, 18)); // NOI18N
@@ -681,6 +740,12 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
+        boxSesion.setBackground(new java.awt.Color(51, 51, 51));
+        boxSesion.setFont(new java.awt.Font("Leelawadee UI", 1, 12)); // NOI18N
+        boxSesion.setForeground(new java.awt.Color(204, 204, 204));
+        boxSesion.setText("Recordarme");
+        boxSesion.setBorder(null);
+
         javax.swing.GroupLayout cardCuentaLayout = new javax.swing.GroupLayout(cardCuenta);
         cardCuenta.setLayout(cardCuentaLayout);
         cardCuentaLayout.setHorizontalGroup(
@@ -688,10 +753,6 @@ public class Principal extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, cardCuentaLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(cardCuentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(cardCuentaLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(321, 321, 321))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, cardCuentaLayout.createSequentialGroup()
                         .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -703,20 +764,26 @@ public class Principal extends javax.swing.JFrame {
                             .addComponent(jLabel2))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(cardCuentaLayout.createSequentialGroup()
-                        .addGroup(cardCuentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(cardCuentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(cardCuentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel12)
                             .addGroup(cardCuentaLayout.createSequentialGroup()
-                                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel15)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(cardCuentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel12)
+                                .addComponent(labelRegistro))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, cardCuentaLayout.createSequentialGroup()
+                                .addGroup(cardCuentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addGroup(cardCuentaLayout.createSequentialGroup()
-                                        .addComponent(jLabel15)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(labelRegistro))
-                                    .addComponent(fieldContraseniaLogIn, javax.swing.GroupLayout.DEFAULT_SIZE, 439, Short.MAX_VALUE)
-                                    .addComponent(jSeparator3)))
-                            .addComponent(btnLogin))
-                        .addGap(18, 137, Short.MAX_VALUE)
+                                        .addComponent(boxSesion)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(btnLogin))
+                                    .addComponent(jSeparator3, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(fieldContraseniaLogIn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 439, Short.MAX_VALUE))
+                                .addGap(182, 182, 182)))
+                        .addGap(18, 18, Short.MAX_VALUE)
                         .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(196, 196, 196))
         );
@@ -741,18 +808,19 @@ public class Principal extends javax.swing.JFrame {
                     .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel12))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(cardCuentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(fieldContraseniaLogIn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(fieldContraseniaLogIn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 8, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnLogin)
+                .addGroup(cardCuentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnLogin)
+                    .addComponent(boxSesion)
+                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(160, 160, 160)
                 .addGroup(cardCuentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel15)
                     .addComponent(labelRegistro))
-                .addContainerGap(167, Short.MAX_VALUE))
+                .addContainerGap(109, Short.MAX_VALUE))
         );
 
         panelCards.add(cardCuenta, "cardCuenta");
@@ -772,7 +840,6 @@ public class Principal extends javax.swing.JFrame {
         jLabel21.setText("Contraseña");
 
         fieldContraseniaSignUp.setFont(new java.awt.Font("Leelawadee UI", 0, 18)); // NOI18N
-        fieldContraseniaSignUp.setText("jPasswordField2");
         fieldContraseniaSignUp.setBorder(null);
 
         jLabel24.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
@@ -973,61 +1040,366 @@ public class Principal extends javax.swing.JFrame {
                 .addComponent(jSeparator9, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnRegistro)
-                .addContainerGap(147, Short.MAX_VALUE))
+                .addContainerGap(89, Short.MAX_VALUE))
         );
 
         panelCards.add(cardRegistro, "cardRegistro");
+
+        panelInfoGeneral.setBackground(new java.awt.Color(255, 255, 255));
+
+        panelImage1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tecnm/tap/nubby_cinema/Resources/Images/usuarioAcceso.png"))); // NOI18N
+
+        javax.swing.GroupLayout panelImage1Layout = new javax.swing.GroupLayout(panelImage1);
+        panelImage1.setLayout(panelImage1Layout);
+        panelImage1Layout.setHorizontalGroup(
+            panelImage1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 200, Short.MAX_VALUE)
+        );
+        panelImage1Layout.setVerticalGroup(
+            panelImage1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 200, Short.MAX_VALUE)
+        );
+
+        jLabel5.setFont(new java.awt.Font("Leelawadee UI", 1, 18)); // NOI18N
+        jLabel5.setText("Usuario:");
+
+        fieldUsuarioAcceso.setEditable(false);
+        fieldUsuarioAcceso.setBackground(new java.awt.Color(255, 255, 255));
+        fieldUsuarioAcceso.setFont(new java.awt.Font("Leelawadee UI", 0, 18)); // NOI18N
+        fieldUsuarioAcceso.setBorder(null);
+        fieldUsuarioAcceso.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+
+        jLabel7.setFont(new java.awt.Font("Leelawadee UI", 1, 18)); // NOI18N
+        jLabel7.setText("Nombre");
+
+        fieldNombreAcceso.setEditable(false);
+        fieldNombreAcceso.setBackground(new java.awt.Color(255, 255, 255));
+        fieldNombreAcceso.setFont(new java.awt.Font("Leelawadee UI", 0, 18)); // NOI18N
+        fieldNombreAcceso.setBorder(null);
+        fieldNombreAcceso.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+
+        jLabel9.setFont(new java.awt.Font("Leelawadee UI", 1, 18)); // NOI18N
+        jLabel9.setText("Apellidos");
+
+        fieldApellidosAcceso.setEditable(false);
+        fieldApellidosAcceso.setBackground(new java.awt.Color(255, 255, 255));
+        fieldApellidosAcceso.setFont(new java.awt.Font("Leelawadee UI", 0, 18)); // NOI18N
+        fieldApellidosAcceso.setBorder(null);
+        fieldApellidosAcceso.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+
+        jLabel35.setFont(new java.awt.Font("Leelawadee UI", 1, 18)); // NOI18N
+        jLabel35.setText("Correo");
+
+        fieldCorreoAcceso.setEditable(false);
+        fieldCorreoAcceso.setBackground(new java.awt.Color(255, 255, 255));
+        fieldCorreoAcceso.setFont(new java.awt.Font("Leelawadee UI", 0, 18)); // NOI18N
+        fieldCorreoAcceso.setBorder(null);
+        fieldCorreoAcceso.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+
+        jLabel36.setFont(new java.awt.Font("Leelawadee UI", 1, 18)); // NOI18N
+        jLabel36.setText("Telefono");
+
+        fieldCelularAcceso.setEditable(false);
+        fieldCelularAcceso.setBackground(new java.awt.Color(255, 255, 255));
+        fieldCelularAcceso.setFont(new java.awt.Font("Leelawadee UI", 0, 18)); // NOI18N
+        fieldCelularAcceso.setBorder(null);
+        fieldCelularAcceso.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+
+        labelDisconnect.setFont(new java.awt.Font("Leelawadee UI", 0, 14)); // NOI18N
+        labelDisconnect.setForeground(new java.awt.Color(51, 153, 255));
+        labelDisconnect.setText("Desconectarse");
+        labelDisconnect.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        labelDisconnect.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                labelDisconnectMouseClicked(evt);
+            }
+        });
+
+        jLabel38.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tecnm/tap/nubby_cinema/Resources/Images/INFORMACIÓN DE LA CUENTA.png"))); // NOI18N
 
         javax.swing.GroupLayout panelInfoGeneralLayout = new javax.swing.GroupLayout(panelInfoGeneral);
         panelInfoGeneral.setLayout(panelInfoGeneralLayout);
         panelInfoGeneralLayout.setHorizontalGroup(
             panelInfoGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 844, Short.MAX_VALUE)
+            .addGroup(panelInfoGeneralLayout.createSequentialGroup()
+                .addGroup(panelInfoGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelInfoGeneralLayout.createSequentialGroup()
+                        .addGap(139, 139, 139)
+                        .addGroup(panelInfoGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelInfoGeneralLayout.createSequentialGroup()
+                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(panelInfoGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel5)
+                                    .addGroup(panelInfoGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(jSeparator10, javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelInfoGeneralLayout.createSequentialGroup()
+                                            .addGap(2, 2, 2)
+                                            .addComponent(fieldUsuarioAcceso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addGroup(panelInfoGeneralLayout.createSequentialGroup()
+                                .addGroup(panelInfoGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(panelInfoGeneralLayout.createSequentialGroup()
+                                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(panelInfoGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel7)
+                                            .addGroup(panelInfoGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                                .addComponent(jSeparator12, javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(fieldNombreAcceso, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addGroup(panelInfoGeneralLayout.createSequentialGroup()
+                                        .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(panelInfoGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel35)
+                                            .addGroup(panelInfoGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                                .addComponent(jSeparator14, javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(fieldCorreoAcceso, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addGap(200, 200, 200)
+                                .addGroup(panelInfoGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(panelInfoGeneralLayout.createSequentialGroup()
+                                        .addComponent(jLabel37, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(panelInfoGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel36)
+                                            .addGroup(panelInfoGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                                .addComponent(jSeparator15, javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(fieldCelularAcceso, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addGroup(panelInfoGeneralLayout.createSequentialGroup()
+                                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(panelInfoGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel9)
+                                            .addGroup(panelInfoGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                                .addComponent(jSeparator13, javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(fieldApellidosAcceso, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))))
+                    .addGroup(panelInfoGeneralLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(labelDisconnect))
+                    .addGroup(panelInfoGeneralLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(panelImage1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(47, 47, 47)
+                        .addComponent(jLabel38)))
+                .addGap(18, 254, Short.MAX_VALUE))
         );
         panelInfoGeneralLayout.setVerticalGroup(
             panelInfoGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 737, Short.MAX_VALUE)
+            .addGroup(panelInfoGeneralLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelInfoGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(panelImage1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel38))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
+                .addGroup(panelInfoGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(panelInfoGeneralLayout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(fieldUsuarioAcceso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator10, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(52, 52, 52)
+                .addGroup(panelInfoGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelInfoGeneralLayout.createSequentialGroup()
+                        .addGroup(panelInfoGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(panelInfoGeneralLayout.createSequentialGroup()
+                                .addComponent(jLabel7)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(fieldNombreAcceso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSeparator12, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelInfoGeneralLayout.createSequentialGroup()
+                        .addGroup(panelInfoGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(panelInfoGeneralLayout.createSequentialGroup()
+                                .addComponent(jLabel9)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(fieldApellidosAcceso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSeparator13, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(68, 68, 68)
+                .addGroup(panelInfoGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelInfoGeneralLayout.createSequentialGroup()
+                        .addComponent(jLabel35)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(fieldCorreoAcceso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSeparator14, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(panelInfoGeneralLayout.createSequentialGroup()
+                        .addGroup(panelInfoGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelInfoGeneralLayout.createSequentialGroup()
+                                .addComponent(jLabel36)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(fieldCelularAcceso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel37, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSeparator15, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addComponent(labelDisconnect)
+                .addContainerGap())
         );
 
         cardAcceso.addTab("Informacion de la cuenta", panelInfoGeneral);
+
+        panelHistorialCompras.setBackground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout panelHistorialComprasLayout = new javax.swing.GroupLayout(panelHistorialCompras);
         panelHistorialCompras.setLayout(panelHistorialComprasLayout);
         panelHistorialComprasLayout.setHorizontalGroup(
             panelHistorialComprasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 844, Short.MAX_VALUE)
+            .addGap(0, 907, Short.MAX_VALUE)
         );
         panelHistorialComprasLayout.setVerticalGroup(
             panelHistorialComprasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 737, Short.MAX_VALUE)
+            .addGap(0, 679, Short.MAX_VALUE)
         );
 
         cardAcceso.addTab("Historial de compas", panelHistorialCompras);
 
-        panelCards.add(cardAcceso, "card6");
+        panelCards.add(cardAcceso, "cardAcceso");
 
         panelPeliculas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tecnm/tap/nubby_cinema/Resources/Images/fondoCartelera1080.png"))); // NOI18N
-        panelPeliculas.setLayout(new java.awt.GridLayout());
+        panelPeliculas.setLayout(new java.awt.GridLayout(1, 0, 10, 0));
         jsp.setViewportView(panelPeliculas);
 
         javax.swing.GroupLayout cardCarteleraLayout = new javax.swing.GroupLayout(cardCartelera);
         cardCartelera.setLayout(cardCarteleraLayout);
         cardCarteleraLayout.setHorizontalGroup(
             cardCarteleraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jsp, javax.swing.GroupLayout.DEFAULT_SIZE, 846, Short.MAX_VALUE)
+            .addComponent(jsp, javax.swing.GroupLayout.DEFAULT_SIZE, 909, Short.MAX_VALUE)
         );
         cardCarteleraLayout.setVerticalGroup(
             cardCarteleraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jsp, javax.swing.GroupLayout.DEFAULT_SIZE, 763, Short.MAX_VALUE)
+            .addComponent(jsp, javax.swing.GroupLayout.DEFAULT_SIZE, 705, Short.MAX_VALUE)
         );
 
         panelCards.add(cardCartelera, "cardCartelera");
+
+        bannerPelicula.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout bannerPeliculaLayout = new javax.swing.GroupLayout(bannerPelicula);
+        bannerPelicula.setLayout(bannerPeliculaLayout);
+        bannerPeliculaLayout.setHorizontalGroup(
+            bannerPeliculaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        bannerPeliculaLayout.setVerticalGroup(
+            bannerPeliculaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 278, Short.MAX_VALUE)
+        );
+
+        panelsPelicula.setBackground(new java.awt.Color(255, 255, 255));
+
+        panelSinopsis.setBackground(new java.awt.Color(255, 255, 255));
+
+        labelNombrePelicula.setFont(new java.awt.Font("Leelawadee UI", 1, 24)); // NOI18N
+        labelNombrePelicula.setText("nombre_pelicula");
+
+        labelDirectorPelicula.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        labelDirectorPelicula.setText("director");
+
+        labelDuracionPelicula.setFont(new java.awt.Font("Leelawadee UI", 0, 14)); // NOI18N
+        labelDuracionPelicula.setText("Duración (min): ");
+
+        labelCategoriaPelicula.setFont(new java.awt.Font("Leelawadee UI", 0, 14)); // NOI18N
+        labelCategoriaPelicula.setText("Categoría:");
+
+        labelGenero.setFont(new java.awt.Font("Leelawadee UI", 0, 14)); // NOI18N
+        labelGenero.setText("genero");
+
+        jLabel43.setFont(new java.awt.Font("Leelawadee UI", 0, 14)); // NOI18N
+        jLabel43.setText("Sinopsis:");
+
+        areaSinopsis.setEditable(false);
+        areaSinopsis.setBackground(new java.awt.Color(255, 255, 255));
+        areaSinopsis.setColumns(20);
+        areaSinopsis.setFont(new java.awt.Font("Leelawadee UI", 0, 14)); // NOI18N
+        areaSinopsis.setLineWrap(true);
+        areaSinopsis.setRows(5);
+        areaSinopsis.setWrapStyleWord(true);
+        areaSinopsis.setBorder(null);
+        jScrollPane1.setViewportView(areaSinopsis);
+
+        javax.swing.GroupLayout panelSinopsisLayout = new javax.swing.GroupLayout(panelSinopsis);
+        panelSinopsis.setLayout(panelSinopsisLayout);
+        panelSinopsisLayout.setHorizontalGroup(
+            panelSinopsisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelSinopsisLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelSinopsisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelSinopsisLayout.createSequentialGroup()
+                        .addGroup(panelSinopsisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(labelNombrePelicula)
+                            .addComponent(labelDuracionPelicula)
+                            .addComponent(labelCategoriaPelicula)
+                            .addComponent(labelGenero)
+                            .addComponent(jLabel43)
+                            .addComponent(labelDirectorPelicula))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 895, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        panelSinopsisLayout.setVerticalGroup(
+            panelSinopsisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelSinopsisLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(labelNombrePelicula)
+                .addGap(18, 18, 18)
+                .addComponent(labelDirectorPelicula)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(labelDuracionPelicula)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(labelCategoriaPelicula)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(labelGenero)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel43)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        panelsPelicula.addTab("Sinopsis", panelSinopsis);
+
+        panelHorarios.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout panelHorariosLayout = new javax.swing.GroupLayout(panelHorarios);
+        panelHorarios.setLayout(panelHorariosLayout);
+        panelHorariosLayout.setHorizontalGroup(
+            panelHorariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 907, Short.MAX_VALUE)
+        );
+        panelHorariosLayout.setVerticalGroup(
+            panelHorariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 395, Short.MAX_VALUE)
+        );
+
+        panelsPelicula.addTab("Horarios Disponibles", panelHorarios);
+
+        javax.swing.GroupLayout cardPeliculaLayout = new javax.swing.GroupLayout(cardPelicula);
+        cardPelicula.setLayout(cardPeliculaLayout);
+        cardPeliculaLayout.setHorizontalGroup(
+            cardPeliculaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(bannerPelicula, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(panelsPelicula)
+        );
+        cardPeliculaLayout.setVerticalGroup(
+            cardPeliculaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(cardPeliculaLayout.createSequentialGroup()
+                .addComponent(bannerPelicula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panelsPelicula))
+        );
+
+        panelCards.add(cardPelicula, "cardPelicula");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(navBar, javax.swing.GroupLayout.DEFAULT_SIZE, 1226, Short.MAX_VALUE)
+            .addComponent(navBar, javax.swing.GroupLayout.DEFAULT_SIZE, 1289, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(panelPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1068,9 +1440,12 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCarteleraMouseDragged
 
     private void btnCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCuentaActionPerformed
-        cards.show(panelCards, "cardCuenta");
+        
         if(!logedIn){
-            
+            cards.show(panelCards, "cardCuenta");
+        }
+        else{
+            cargarUsuario(usuario,false);
         }
     }//GEN-LAST:event_btnCuentaActionPerformed
 
@@ -1126,10 +1501,13 @@ public class Principal extends javax.swing.JFrame {
             JsonObject output = jsonRecived.get("output").getAsJsonObject();
             JsonObject datosUsuario = output.get("0").getAsJsonObject();
             JOptionPane.showMessageDialog(null,"Inicio correcto");
-            System.out.println(datosUsuario.get("usuario"));
-            System.out.println(datosUsuario.get("contrasenia"));
             
-            cargarUsuario(datosUsuario);
+            if(boxSesion.isSelected()){
+                SaveSession(datosUsuario);
+            }
+            cargarUsuario(datosUsuario,false);
+            
+            
         }
         catch(Exception e){
             e.printStackTrace();
@@ -1142,10 +1520,33 @@ public class Principal extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnLoginActionPerformed
 
-    private void cargarUsuario(JsonObject datosUsuario) {
-        //cargar datos del usuario al card acceso
+    private void cargarUsuario(JsonObject datosUsuario, boolean loaded) {
+        System.out.println(datosUsuario.toString());
+        
+        this.usuario = datosUsuario;
+        
+        fieldUsuarioAcceso.setText(datosUsuario.get("usuario").toString().substring(1,datosUsuario.get("usuario").toString().length()-1));
+        fieldNombreAcceso.setText(datosUsuario.get("nombre").toString().substring(1,datosUsuario.get("nombre").toString().length()-1));
+        fieldApellidosAcceso.setText(datosUsuario.get("apellidos").toString().substring(1,datosUsuario.get("apellidos").toString().length()-1));
+        fieldCorreoAcceso.setText(datosUsuario.get("correo").toString().substring(1,datosUsuario.get("correo").toString().length()-1));
+        fieldCelularAcceso.setText(datosUsuario.get("celular").toString().substring(1,datosUsuario.get("celular").toString().length()-1));
+        logedIn = true;
+        
+        if(!loaded)
+            cards.show(panelCards, "cardAcceso");
+        
+        
     }
     
+    private void SaveSession(JsonObject datosUsuario){
+        try {
+            BufferedWriter bw = new BufferedWriter(new FileWriter("loged.json"));
+            bw.write(datosUsuario.toString());
+            bw.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
     
     private void btnRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistroActionPerformed
         // TODO add your handling code here:
@@ -1158,6 +1559,17 @@ public class Principal extends javax.swing.JFrame {
     private void labelToLoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelToLoginMouseClicked
         cards.show(panelCards, "cardCuenta");
     }//GEN-LAST:event_labelToLoginMouseClicked
+
+    private void labelDisconnectMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelDisconnectMouseClicked
+        if(JOptionPane.showConfirmDialog(null,"¿Está seguro que desea cerrar sesión?") == 0){
+            this.usuario = null;
+            this.logedIn = false;
+            cards.show(panelCards, "cardCuenta");
+
+            File file = new File("loged.json");
+            file.delete();
+        }
+    }//GEN-LAST:event_labelDisconnectMouseClicked
     
     private void labelReturnSideBarMouseClicked(MouseEvent evt) {
         showSideBar();
@@ -1196,8 +1608,91 @@ public class Principal extends javax.swing.JFrame {
             }
         });
     }
+    
+    private void SeleccionarPelicula(int id, JsonObject pelicula){
+        cards.show(panelCards, "cardPelicula");
+        
+        String query = "qry=SELECT A.nombre_pelicula, B.genero FROM peliculas A INNER JOIN generos B ON A.id_genero = B.id_genero WHERE A.id_pelicula = "+id;
+        String response = HttpRequest.post("http://localhost:80/Phpfiles/inner_join.php").send(query).body();
+        JsonObject jsonRecived = new JsonParser().parse(response).getAsJsonObject();
+        JsonObject output = jsonRecived.getAsJsonObject("output");
+        JsonObject data = output.getAsJsonObject("0");
+        
+        String nombrePelicula = pelicula.get("nombre_pelicula").toString().substring(1,pelicula.get("nombre_pelicula").toString().length()-1);
+        String duracion = String.valueOf(pelicula.get("duracion_minutos").toString().substring(1,pelicula.get("duracion_minutos").toString().length()-1));
+        String categoria = String.valueOf(pelicula.get("categoria").toString().substring(1,pelicula.get("categoria").toString().length()-1));
+        String director = String.valueOf(pelicula.get("director").toString().substring(1,pelicula.get("director").toString().length()-1));
+        String sinopsis = String.valueOf(pelicula.get("Sinopsis").toString().substring(1,pelicula.get("Sinopsis").toString().length()-1));
+        String genero = data.get("genero").toString().substring(1,data.get("genero").toString().length()-1);
+        
+        System.out.println("Se seleccionó: "+nombrePelicula);
+        ImageIcon img = new ImageIcon(getClass().getResource("/tecnm/tap/nubby_cinema/Resources/Images/BannerPeliculas/"+nombrePelicula+"1.png"));
+        labelNombrePelicula.setText(nombrePelicula);
+        labelDirectorPelicula.setText("Director: "+director);
+        labelDuracionPelicula.setText("Duración (min):"+duracion);
+        labelGenero.setText(genero);
+        labelCategoriaPelicula.setText("Categoría: "+categoria);
+        areaSinopsis.setText(sinopsis);
+        
+        
+        
+        
+        
+        
+        
+        bannerPelicula.setIcon(img);
+        
+    }
+    
+    private class PortadaListener implements MouseListener{
+        int id;
+        JLabel label;
+        JsonObject pelicula;
+                
+        public PortadaListener(int id, JLabel label, JsonObject pelicula) {
+            this.id = id+1;
+            this.label = label;
+            this.pelicula = pelicula;
+        }
+        
+       
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            if(e.getSource() == label){
+                //JOptionPane.showMessageDialog(null, "Datos de la pelicula: \n"+pelicula.get("nombre_pelicula"));
+                System.out.println("Id: "+id+"\n"+pelicula.toString());
+                SeleccionarPelicula(id, pelicula);
+            }
+        }
 
+        @Override
+        public void mousePressed(MouseEvent e) {
+ 
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+            
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+            
+        }
+    
+    
+    }
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextArea areaSinopsis;
+    private org.edisoncor.gui.panel.PanelImage bannerPelicula;
+    private javax.swing.JCheckBox boxSesion;
     private javax.swing.JButton btnCartelera;
     private javax.swing.JButton btnCuenta;
     private javax.swing.JButton btnLogin;
@@ -1205,15 +1700,21 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JTabbedPane cardAcceso;
     private javax.swing.JPanel cardCartelera;
     private javax.swing.JPanel cardCuenta;
+    private javax.swing.JPanel cardPelicula;
     private javax.swing.JPanel cardPrincipal;
     private javax.swing.JPanel cardRegistro;
+    private javax.swing.JTextField fieldApellidosAcceso;
     private javax.swing.JTextField fieldApellidosSignUp;
     private javax.swing.JTextField fieldBusqueda;
     private javax.swing.JTextField fieldCelular;
+    private javax.swing.JTextField fieldCelularAcceso;
     private javax.swing.JPasswordField fieldContraseniaLogIn;
     private javax.swing.JPasswordField fieldContraseniaSignUp;
+    private javax.swing.JTextField fieldCorreoAcceso;
     private javax.swing.JTextField fieldCorreoSignUp;
+    private javax.swing.JTextField fieldNombreAcceso;
     private javax.swing.JTextField fieldNombreSignUp;
+    private javax.swing.JTextField fieldUsuarioAcceso;
     private javax.swing.JTextField fieldUsuarioLogIn;
     private javax.swing.JTextField fieldUsuarioSignUp;
     private javax.swing.JInternalFrame jInternalFrame1;
@@ -1224,6 +1725,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
@@ -1244,7 +1746,24 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
+    private javax.swing.JLabel jLabel35;
+    private javax.swing.JLabel jLabel36;
+    private javax.swing.JLabel jLabel37;
+    private javax.swing.JLabel jLabel38;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel43;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator10;
+    private javax.swing.JSeparator jSeparator12;
+    private javax.swing.JSeparator jSeparator13;
+    private javax.swing.JSeparator jSeparator14;
+    private javax.swing.JSeparator jSeparator15;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
@@ -1255,8 +1774,13 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator9;
     private javax.swing.JScrollPane jsp;
     private javax.swing.JLabel labelCarteleraIcon;
+    private javax.swing.JLabel labelCategoriaPelicula;
     private javax.swing.JLabel labelClose;
+    private javax.swing.JLabel labelDirectorPelicula;
+    private javax.swing.JLabel labelDisconnect;
+    private javax.swing.JLabel labelDuracionPelicula;
     private javax.swing.JLabel labelFacebook;
+    private javax.swing.JLabel labelGenero;
     private javax.swing.JLabel labelHideSideBar;
     private javax.swing.JLabel labelInstagram;
     private javax.swing.JLabel labelLeft;
@@ -1264,6 +1788,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel labelMaximize;
     private javax.swing.JLabel labelMinimize;
     private javax.swing.JLabel labelNavBar;
+    private javax.swing.JLabel labelNombrePelicula;
     private javax.swing.JLabel labelPeli1;
     private javax.swing.JLabel labelPeli2;
     private javax.swing.JLabel labelPeli3;
@@ -1277,11 +1802,15 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JPanel navBar;
     private javax.swing.JPanel panelCards;
     private javax.swing.JPanel panelHistorialCompras;
+    private javax.swing.JPanel panelHorarios;
+    private org.edisoncor.gui.panel.PanelImage panelImage1;
     private org.edisoncor.gui.panel.PanelImage panelImage3;
     private javax.swing.JPanel panelInfoGeneral;
     private javax.swing.JPanel panelOpcionesButton;
     private org.edisoncor.gui.panel.PanelImage panelPeliculas;
     private javax.swing.JPanel panelPrincipal;
+    private javax.swing.JPanel panelSinopsis;
+    private javax.swing.JTabbedPane panelsPelicula;
     private javax.swing.JPanel sidePanel;
     private javax.swing.JLabel slider;
     // End of variables declaration//GEN-END:variables

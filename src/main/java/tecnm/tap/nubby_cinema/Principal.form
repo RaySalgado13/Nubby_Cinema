@@ -56,7 +56,7 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="navBar" pref="1226" max="32767" attributes="0"/>
+          <Component id="navBar" pref="1289" max="32767" attributes="0"/>
           <Group type="102" attributes="0">
               <Component id="panelPrincipal" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
@@ -450,7 +450,7 @@
                               </Group>
                           </Group>
                       </Group>
-                      <EmptySpace pref="66" max="32767" attributes="0"/>
+                      <EmptySpace pref="129" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -472,7 +472,7 @@
                           <Component id="labelPeli2" min="-2" max="-2" attributes="0"/>
                           <Component id="labelPeli3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="64" max="32767" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="labelFacebook" min="-2" pref="52" max="-2" attributes="0"/>
                           <Component id="labelTwitter" min="-2" pref="52" max="-2" attributes="0"/>
@@ -585,11 +585,6 @@
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
-                          <Group type="102" alignment="1" attributes="0">
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                              <Component id="jLabel13" min="-2" pref="31" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="321" max="-2" attributes="0"/>
-                          </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="jLabel10" min="-2" pref="31" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
@@ -604,24 +599,32 @@
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="1" attributes="0">
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <Component id="jLabel11" min="-2" pref="31" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Component id="jLabel15" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="labelRegistro" min="-2" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Component id="fieldContraseniaLogIn" pref="439" max="32767" attributes="0"/>
-                                          <Component id="jSeparator3" alignment="0" max="32767" attributes="0"/>
-                                      </Group>
-                                  </Group>
-                                  <Component id="btnLogin" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="jLabel11" min="-2" pref="31" max="-2" attributes="0"/>
+                                  <Component id="jLabel13" alignment="0" min="-2" pref="31" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace type="separate" pref="137" max="32767" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="jLabel15" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="labelRegistro" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                          <Group type="102" attributes="0">
+                                              <Component id="boxSesion" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="32767" attributes="0"/>
+                                              <Component id="btnLogin" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Component id="jSeparator3" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="fieldContraseniaLogIn" alignment="0" pref="439" max="32767" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace min="-2" pref="182" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <EmptySpace type="separate" max="32767" attributes="0"/>
                               <Component id="jLabel14" min="-2" pref="31" max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -654,20 +657,21 @@
                           <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jLabel13" min="-2" pref="18" max="-2" attributes="0"/>
-                          <Component id="fieldContraseniaLogIn" min="-2" max="-2" attributes="0"/>
-                      </Group>
+                      <Component id="fieldContraseniaLogIn" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="jSeparator3" min="-2" pref="8" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="btnLogin" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="btnLogin" min="-2" max="-2" attributes="0"/>
+                          <Component id="boxSesion" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel13" min="-2" pref="18" max="-2" attributes="0"/>
+                      </Group>
                       <EmptySpace min="-2" pref="160" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel15" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="labelRegistro" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="167" max="32767" attributes="0"/>
+                      <EmptySpace pref="109" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -713,7 +717,6 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Leelawadee UI" size="18" style="0"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="jPasswordField2"/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="null"/>
                 </Property>
@@ -776,6 +779,23 @@
               <Events>
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="labelRegistroMouseClicked"/>
               </Events>
+            </Component>
+            <Component class="javax.swing.JCheckBox" name="boxSesion">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="33" green="33" red="33" type="rgb"/>
+                </Property>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Leelawadee UI" size="12" style="1"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="cc" green="cc" red="cc" type="rgb"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Recordarme"/>
+                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                  <Border info="null"/>
+                </Property>
+              </Properties>
             </Component>
           </SubComponents>
         </Container>
@@ -980,7 +1000,7 @@
                       <Component id="jSeparator9" min="-2" pref="10" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="btnRegistro" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="147" max="32767" attributes="0"/>
+                      <EmptySpace pref="89" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -1037,7 +1057,6 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Leelawadee UI" size="18" style="0"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="jPasswordField2"/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="null"/>
                 </Property>
@@ -1195,13 +1214,18 @@
         <Container class="javax.swing.JTabbedPane" name="cardAcceso">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
-              <CardConstraints cardName="card6"/>
+              <CardConstraints cardName="cardAcceso"/>
             </Constraint>
           </Constraints>
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
           <SubComponents>
             <Container class="javax.swing.JPanel" name="panelInfoGeneral">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                </Property>
+              </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
                   <JTabbedPaneConstraints tabName="Informacion de la cuenta">
@@ -1213,17 +1237,367 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <EmptySpace min="0" pref="844" max="32767" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace min="-2" pref="139" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="jLabel4" min="-2" pref="60" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
+                                              <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                                                  <Component id="jSeparator10" alignment="0" max="32767" attributes="0"/>
+                                                  <Group type="102" alignment="0" attributes="0">
+                                                      <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
+                                                      <Component id="fieldUsuarioAcceso" min="-2" max="-2" attributes="0"/>
+                                                  </Group>
+                                              </Group>
+                                          </Group>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Group type="102" alignment="0" attributes="0">
+                                                  <Component id="jLabel6" min="-2" pref="60" max="-2" attributes="0"/>
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Group type="103" groupAlignment="0" attributes="0">
+                                                      <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
+                                                      <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                                                          <Component id="jSeparator12" alignment="0" max="32767" attributes="0"/>
+                                                          <Component id="fieldNombreAcceso" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                      </Group>
+                                                  </Group>
+                                              </Group>
+                                              <Group type="102" alignment="0" attributes="0">
+                                                  <Component id="jLabel16" min="-2" pref="60" max="-2" attributes="0"/>
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Group type="103" groupAlignment="0" attributes="0">
+                                                      <Component id="jLabel35" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                      <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                                                          <Component id="jSeparator14" alignment="0" max="32767" attributes="0"/>
+                                                          <Component id="fieldCorreoAcceso" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                      </Group>
+                                                  </Group>
+                                              </Group>
+                                          </Group>
+                                          <EmptySpace min="-2" pref="200" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Group type="102" alignment="0" attributes="0">
+                                                  <Component id="jLabel37" min="-2" pref="60" max="-2" attributes="0"/>
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Group type="103" groupAlignment="0" attributes="0">
+                                                      <Component id="jLabel36" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                      <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                                                          <Component id="jSeparator15" alignment="0" max="32767" attributes="0"/>
+                                                          <Component id="fieldCelularAcceso" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                      </Group>
+                                                  </Group>
+                                              </Group>
+                                              <Group type="102" alignment="0" attributes="0">
+                                                  <Component id="jLabel8" min="-2" pref="60" max="-2" attributes="0"/>
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Group type="103" groupAlignment="0" attributes="0">
+                                                      <Component id="jLabel9" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                      <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                                                          <Component id="jSeparator13" alignment="0" max="32767" attributes="0"/>
+                                                          <Component id="fieldApellidosAcceso" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                      </Group>
+                                                  </Group>
+                                              </Group>
+                                          </Group>
+                                      </Group>
+                                  </Group>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="labelDisconnect" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="panelImage1" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
+                                  <Component id="jLabel38" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <EmptySpace min="18" pref="254" max="32767" attributes="0"/>
+                      </Group>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <EmptySpace min="0" pref="737" max="32767" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="panelImage1" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel38" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace pref="93" max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jLabel4" min="-2" pref="42" max="-2" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="fieldUsuarioAcceso" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jSeparator10" min="-2" pref="10" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="jLabel6" alignment="0" min="-2" pref="42" max="-2" attributes="0"/>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="fieldNombreAcceso" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="jSeparator12" min="-2" pref="10" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="jLabel8" alignment="0" min="-2" pref="42" max="-2" attributes="0"/>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="fieldApellidosAcceso" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="jSeparator13" min="-2" pref="10" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <EmptySpace min="-2" pref="68" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="jLabel35" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="fieldCorreoAcceso" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="jSeparator14" min="-2" pref="10" max="-2" attributes="0"/>
+                              </Group>
+                              <Component id="jLabel16" alignment="0" min="-2" pref="42" max="-2" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="jLabel36" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="fieldCelularAcceso" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Component id="jLabel37" min="-2" pref="42" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="jSeparator15" min="-2" pref="10" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                          <Component id="labelDisconnect" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                      </Group>
                   </Group>
                 </DimensionLayout>
               </Layout>
+              <SubComponents>
+                <Container class="org.edisoncor.gui.panel.PanelImage" name="panelImage1">
+                  <Properties>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/tecnm/tap/nubby_cinema/Resources/Images/usuarioAcceso.png"/>
+                    </Property>
+                  </Properties>
+
+                  <Layout>
+                    <DimensionLayout dim="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <EmptySpace min="0" pref="200" max="32767" attributes="0"/>
+                      </Group>
+                    </DimensionLayout>
+                    <DimensionLayout dim="1">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <EmptySpace min="0" pref="200" max="32767" attributes="0"/>
+                      </Group>
+                    </DimensionLayout>
+                  </Layout>
+                </Container>
+                <Component class="javax.swing.JLabel" name="jLabel4">
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel5">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Leelawadee UI" size="18" style="1"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Usuario:"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JTextField" name="fieldUsuarioAcceso">
+                  <Properties>
+                    <Property name="editable" type="boolean" value="false"/>
+                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                    </Property>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Leelawadee UI" size="18" style="0"/>
+                    </Property>
+                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                      <Border info="null"/>
+                    </Property>
+                    <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                      <Color id="Default Cursor"/>
+                    </Property>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel6">
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel7">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Leelawadee UI" size="18" style="1"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Nombre"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JTextField" name="fieldNombreAcceso">
+                  <Properties>
+                    <Property name="editable" type="boolean" value="false"/>
+                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                    </Property>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Leelawadee UI" size="18" style="0"/>
+                    </Property>
+                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                      <Border info="null"/>
+                    </Property>
+                    <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                      <Color id="Default Cursor"/>
+                    </Property>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel8">
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel9">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Leelawadee UI" size="18" style="1"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Apellidos"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JTextField" name="fieldApellidosAcceso">
+                  <Properties>
+                    <Property name="editable" type="boolean" value="false"/>
+                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                    </Property>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Leelawadee UI" size="18" style="0"/>
+                    </Property>
+                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                      <Border info="null"/>
+                    </Property>
+                    <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                      <Color id="Default Cursor"/>
+                    </Property>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel16">
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel35">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Leelawadee UI" size="18" style="1"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Correo"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JTextField" name="fieldCorreoAcceso">
+                  <Properties>
+                    <Property name="editable" type="boolean" value="false"/>
+                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                    </Property>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Leelawadee UI" size="18" style="0"/>
+                    </Property>
+                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                      <Border info="null"/>
+                    </Property>
+                    <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                      <Color id="Default Cursor"/>
+                    </Property>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel36">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Leelawadee UI" size="18" style="1"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Telefono"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JTextField" name="fieldCelularAcceso">
+                  <Properties>
+                    <Property name="editable" type="boolean" value="false"/>
+                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                    </Property>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Leelawadee UI" size="18" style="0"/>
+                    </Property>
+                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                      <Border info="null"/>
+                    </Property>
+                    <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                      <Color id="Default Cursor"/>
+                    </Property>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel37">
+                </Component>
+                <Component class="javax.swing.JSeparator" name="jSeparator10">
+                </Component>
+                <Component class="javax.swing.JSeparator" name="jSeparator12">
+                </Component>
+                <Component class="javax.swing.JSeparator" name="jSeparator13">
+                </Component>
+                <Component class="javax.swing.JSeparator" name="jSeparator14">
+                </Component>
+                <Component class="javax.swing.JSeparator" name="jSeparator15">
+                </Component>
+                <Component class="javax.swing.JLabel" name="labelDisconnect">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Leelawadee UI" size="14" style="0"/>
+                    </Property>
+                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="ff" green="99" red="33" type="rgb"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Desconectarse"/>
+                    <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                      <Color id="Hand Cursor"/>
+                    </Property>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="labelDisconnectMouseClicked"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel38">
+                  <Properties>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/tecnm/tap/nubby_cinema/Resources/Images/INFORMACI&#xd3;N DE LA CUENTA.png"/>
+                    </Property>
+                  </Properties>
+                </Component>
+              </SubComponents>
             </Container>
             <Container class="javax.swing.JPanel" name="panelHistorialCompras">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                </Property>
+              </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
                   <JTabbedPaneConstraints tabName="Historial de compas">
@@ -1235,12 +1609,12 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <EmptySpace min="0" pref="844" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="907" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <EmptySpace min="0" pref="737" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="679" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
               </Layout>
@@ -1257,12 +1631,12 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jsp" alignment="0" pref="846" max="32767" attributes="0"/>
+                  <Component id="jsp" alignment="0" pref="909" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jsp" alignment="0" pref="763" max="32767" attributes="0"/>
+                  <Component id="jsp" alignment="0" pref="705" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
           </Layout>
@@ -1280,7 +1654,230 @@
 
                   <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
                     <Property name="columns" type="int" value="0"/>
+                    <Property name="horizontalGap" type="int" value="10"/>
                     <Property name="rows" type="int" value="1"/>
+                  </Layout>
+                </Container>
+              </SubComponents>
+            </Container>
+          </SubComponents>
+        </Container>
+        <Container class="javax.swing.JPanel" name="cardPelicula">
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
+              <CardConstraints cardName="cardPelicula"/>
+            </Constraint>
+          </Constraints>
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="bannerPelicula" max="32767" attributes="0"/>
+                  <Component id="panelsPelicula" alignment="0" max="32767" attributes="0"/>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="bannerPelicula" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="panelsPelicula" max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+          </Layout>
+          <SubComponents>
+            <Container class="org.edisoncor.gui.panel.PanelImage" name="bannerPelicula">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                </Property>
+              </Properties>
+
+              <Layout>
+                <DimensionLayout dim="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  </Group>
+                </DimensionLayout>
+                <DimensionLayout dim="1">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <EmptySpace min="0" pref="278" max="32767" attributes="0"/>
+                  </Group>
+                </DimensionLayout>
+              </Layout>
+            </Container>
+            <Container class="javax.swing.JTabbedPane" name="panelsPelicula">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                </Property>
+              </Properties>
+
+              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
+              <SubComponents>
+                <Container class="javax.swing.JPanel" name="panelSinopsis">
+                  <Properties>
+                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                    </Property>
+                  </Properties>
+                  <Constraints>
+                    <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+                      <JTabbedPaneConstraints tabName="Sinopsis">
+                        <Property name="tabTitle" type="java.lang.String" value="Sinopsis"/>
+                      </JTabbedPaneConstraints>
+                    </Constraint>
+                  </Constraints>
+
+                  <Layout>
+                    <DimensionLayout dim="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="labelNombrePelicula" min="-2" max="-2" attributes="0"/>
+                                          <Component id="labelDuracionPelicula" min="-2" max="-2" attributes="0"/>
+                                          <Component id="labelCategoriaPelicula" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="labelGenero" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jLabel43" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="labelDirectorPelicula" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                  </Group>
+                                  <Component id="jScrollPane1" alignment="1" pref="895" max="32767" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                    </DimensionLayout>
+                    <DimensionLayout dim="1">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="labelNombrePelicula" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="labelDirectorPelicula" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="labelDuracionPelicula" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="labelCategoriaPelicula" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="labelGenero" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="jLabel43" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jScrollPane1" pref="180" max="32767" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                    </DimensionLayout>
+                  </Layout>
+                  <SubComponents>
+                    <Component class="javax.swing.JLabel" name="labelNombrePelicula">
+                      <Properties>
+                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                          <Font name="Leelawadee UI" size="24" style="1"/>
+                        </Property>
+                        <Property name="text" type="java.lang.String" value="nombre_pelicula"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="labelDirectorPelicula">
+                      <Properties>
+                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                          <Font name="Dialog" size="14" style="0"/>
+                        </Property>
+                        <Property name="text" type="java.lang.String" value="director"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="labelDuracionPelicula">
+                      <Properties>
+                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                          <Font name="Leelawadee UI" size="14" style="0"/>
+                        </Property>
+                        <Property name="text" type="java.lang.String" value="Duraci&#xf3;n (min): "/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="labelCategoriaPelicula">
+                      <Properties>
+                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                          <Font name="Leelawadee UI" size="14" style="0"/>
+                        </Property>
+                        <Property name="text" type="java.lang.String" value="Categor&#xed;a:"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="labelGenero">
+                      <Properties>
+                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                          <Font name="Leelawadee UI" size="14" style="0"/>
+                        </Property>
+                        <Property name="text" type="java.lang.String" value="genero"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="jLabel43">
+                      <Properties>
+                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                          <Font name="Leelawadee UI" size="14" style="0"/>
+                        </Property>
+                        <Property name="text" type="java.lang.String" value="Sinopsis:"/>
+                      </Properties>
+                    </Component>
+                    <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+                      <AuxValues>
+                        <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+                      </AuxValues>
+
+                      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+                      <SubComponents>
+                        <Component class="javax.swing.JTextArea" name="areaSinopsis">
+                          <Properties>
+                            <Property name="editable" type="boolean" value="false"/>
+                            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                            </Property>
+                            <Property name="columns" type="int" value="20"/>
+                            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                              <Font name="Leelawadee UI" size="14" style="0"/>
+                            </Property>
+                            <Property name="lineWrap" type="boolean" value="true"/>
+                            <Property name="rows" type="int" value="5"/>
+                            <Property name="wrapStyleWord" type="boolean" value="true"/>
+                            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                              <Border info="null"/>
+                            </Property>
+                          </Properties>
+                        </Component>
+                      </SubComponents>
+                    </Container>
+                  </SubComponents>
+                </Container>
+                <Container class="javax.swing.JPanel" name="panelHorarios">
+                  <Properties>
+                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                    </Property>
+                  </Properties>
+                  <Constraints>
+                    <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+                      <JTabbedPaneConstraints tabName="Horarios Disponibles">
+                        <Property name="tabTitle" type="java.lang.String" value="Horarios Disponibles"/>
+                      </JTabbedPaneConstraints>
+                    </Constraint>
+                  </Constraints>
+
+                  <Layout>
+                    <DimensionLayout dim="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <EmptySpace min="0" pref="907" max="32767" attributes="0"/>
+                      </Group>
+                    </DimensionLayout>
+                    <DimensionLayout dim="1">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <EmptySpace min="0" pref="395" max="32767" attributes="0"/>
+                      </Group>
+                    </DimensionLayout>
                   </Layout>
                 </Container>
               </SubComponents>
