@@ -1,10 +1,10 @@
 <?php
 
 require 'ManejadorBD.php';
-$table = $_POST['table'];
+$qry = $_POST['qry'];
 
 $m = new ManejadorBD();
-$result = $m->showAll($table);
+$result = $m->InnerJoin($qry);
 echo json_encode($result,JSON_OBJECT_AS_ARRAY);
 
 ?>
