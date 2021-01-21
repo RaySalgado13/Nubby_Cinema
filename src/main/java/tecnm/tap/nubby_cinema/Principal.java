@@ -121,7 +121,7 @@ public class Principal extends javax.swing.JFrame {
                 this.idUsuario = usuario.get("id_usuario").getAsInt();
                 System.out.println("Sesion iniciada con id_usuario: "+idUsuario);
                 cargarUsuario(usuario,true);
-                
+                cargarHistorial("Número de boleto");
             }
         } catch (Exception e) {
         }
@@ -381,8 +381,8 @@ public class Principal extends javax.swing.JFrame {
         panelHistorialCompras = new javax.swing.JPanel();
         panelImage4 = new org.edisoncor.gui.panel.PanelImage();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        tableHistorial = new javax.swing.JTable();
+        comboOrderBt = new javax.swing.JComboBox<>();
         jLabel42 = new javax.swing.JLabel();
         cardCartelera = new javax.swing.JPanel();
         jsp = new javax.swing.JScrollPane();
@@ -715,7 +715,7 @@ public class Principal extends javax.swing.JFrame {
                             .addComponent(labelPeli2)
                             .addGap(45, 45, 45)
                             .addComponent(labelPeli3))))
-                .addContainerGap(200, Short.MAX_VALUE))
+                .addContainerGap(206, Short.MAX_VALUE))
         );
         cardPrincipalLayout.setVerticalGroup(
             cardPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1182,7 +1182,7 @@ public class Principal extends javax.swing.JFrame {
                         .addComponent(panelImage1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(47, 47, 47)
                         .addComponent(jLabel38)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 207, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 221, Short.MAX_VALUE)
                         .addComponent(comboOpciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(panelInfoGeneralLayout.createSequentialGroup()
                         .addGap(140, 140, 140)
@@ -1315,21 +1315,21 @@ public class Principal extends javax.swing.JFrame {
             .addGap(0, 186, Short.MAX_VALUE)
         );
 
-        jTable1.setBackground(new java.awt.Color(255, 255, 255));
-        jTable1.setFont(new java.awt.Font("Leelawadee UI", 1, 14)); // NOI18N
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tableHistorial.setBackground(new java.awt.Color(255, 255, 255));
+        tableHistorial.setFont(new java.awt.Font("Leelawadee UI", 1, 14)); // NOI18N
+        tableHistorial.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Número de boleto", "Pelicula", "Fecha", "Dia", "Sala", "Sucursal"
+                "Número de boleto", "Asiento", "Pelicula", "Fecha", "Hora", "Sala", "Sucursal"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -1340,11 +1340,16 @@ public class Principal extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTable1.setGridColor(new java.awt.Color(102, 102, 102));
-        jScrollPane3.setViewportView(jTable1);
+        tableHistorial.setGridColor(new java.awt.Color(102, 102, 102));
+        jScrollPane3.setViewportView(tableHistorial);
 
-        jComboBox1.setFont(new java.awt.Font("Leelawadee UI", 1, 14)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Número de boleto", "Fecha", "Hora", "Pelicula", "Sala", "Sucursal", " " }));
+        comboOrderBt.setFont(new java.awt.Font("Leelawadee UI", 1, 14)); // NOI18N
+        comboOrderBt.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Número de boleto", "Fecha", "Hora", "Pelicula", "Sala", "Sucursal" }));
+        comboOrderBt.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                comboOrderBtItemStateChanged(evt);
+            }
+        });
 
         jLabel42.setFont(new java.awt.Font("Leelawadee UI", 1, 12)); // NOI18N
         jLabel42.setText("Ordenar por");
@@ -1360,10 +1365,10 @@ public class Principal extends javax.swing.JFrame {
                         .addComponent(jLabel42)
                         .addGap(222, 222, 222)
                         .addComponent(panelImage4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 220, Short.MAX_VALUE))
+                        .addGap(0, 226, Short.MAX_VALUE))
                     .addGroup(panelHistorialComprasLayout.createSequentialGroup()
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addComponent(comboOrderBt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jScrollPane3))))
         );
         panelHistorialComprasLayout.setVerticalGroup(
@@ -1380,7 +1385,7 @@ public class Principal extends javax.swing.JFrame {
                 .addGroup(panelHistorialComprasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 501, Short.MAX_VALUE)
                     .addGroup(panelHistorialComprasLayout.createSequentialGroup()
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(comboOrderBt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
 
@@ -1396,7 +1401,7 @@ public class Principal extends javax.swing.JFrame {
         cardCartelera.setLayout(cardCarteleraLayout);
         cardCarteleraLayout.setHorizontalGroup(
             cardCarteleraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jsp, javax.swing.GroupLayout.DEFAULT_SIZE, 980, Short.MAX_VALUE)
+            .addComponent(jsp, javax.swing.GroupLayout.DEFAULT_SIZE, 986, Short.MAX_VALUE)
         );
         cardCarteleraLayout.setVerticalGroup(
             cardCarteleraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1466,7 +1471,7 @@ public class Principal extends javax.swing.JFrame {
                             .addComponent(jLabel43)
                             .addComponent(labelDirectorPelicula))
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 966, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 972, Short.MAX_VALUE))
                 .addContainerGap())
         );
         panelSinopsisLayout.setVerticalGroup(
@@ -1599,7 +1604,7 @@ public class Principal extends javax.swing.JFrame {
         panelHorariosLayout.setHorizontalGroup(
             panelHorariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 978, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 984, Short.MAX_VALUE)
         );
         panelHorariosLayout.setVerticalGroup(
             panelHorariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1668,7 +1673,7 @@ public class Principal extends javax.swing.JFrame {
             .addGroup(pantallaLayout.createSequentialGroup()
                 .addGap(421, 421, 421)
                 .addComponent(jLabel39)
-                .addContainerGap(501, Short.MAX_VALUE))
+                .addContainerGap(507, Short.MAX_VALUE))
         );
         pantallaLayout.setVerticalGroup(
             pantallaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1786,7 +1791,7 @@ public class Principal extends javax.swing.JFrame {
             .addGroup(cardConfirmarLayout.createSequentialGroup()
                 .addGap(300, 300, 300)
                 .addComponent(jLabel41)
-                .addContainerGap(300, Short.MAX_VALUE))
+                .addContainerGap(306, Short.MAX_VALUE))
         );
         cardConfirmarLayout.setVerticalGroup(
             cardConfirmarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1820,7 +1825,7 @@ public class Principal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(navBar, javax.swing.GroupLayout.DEFAULT_SIZE, 1360, Short.MAX_VALUE)
+            .addComponent(navBar, javax.swing.GroupLayout.DEFAULT_SIZE, 1366, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(panelPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1861,12 +1866,14 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCarteleraMouseDragged
 
     private void btnCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCuentaActionPerformed
-        
+        DefaultTableModel dtm2 = (DefaultTableModel) tableHistorial.getModel();
+        dtm2.setRowCount(0);
         if(!logedIn){
             cards.show(panelCards, "cardCuenta");
         }
         else{
             cargarUsuario(usuario,false);
+            cargarHistorial("Número de boleto");
         }
     }//GEN-LAST:event_btnCuentaActionPerformed
 
@@ -1874,6 +1881,8 @@ public class Principal extends javax.swing.JFrame {
         cards.show(panelCards, "cardCartelera");
         DefaultTableModel dtm = (DefaultTableModel) tableHorarios.getModel();
         dtm.setRowCount(0);
+        DefaultTableModel dtm2 = (DefaultTableModel) tableHistorial.getModel();
+        dtm2.setRowCount(0);
     }//GEN-LAST:event_btnCarteleraActionPerformed
 
     private void labelLogoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelLogoMouseClicked
@@ -1931,7 +1940,9 @@ public class Principal extends javax.swing.JFrame {
             if(boxSesion.isSelected()){
                 SaveSession(datosUsuario);
             }
-            cargarUsuario(datosUsuario,false);      
+            cargarUsuario(datosUsuario,false); 
+            cargarHistorial("Número de boleto");
+            
         }
         catch(Exception e){
             e.printStackTrace();
@@ -1954,6 +1965,66 @@ public class Principal extends javax.swing.JFrame {
         
         if(!loaded)
             cards.show(panelCards, "cardAcceso");   
+    }
+    
+    private void cargarHistorial(String opc){
+        DefaultTableModel dtm2 = (DefaultTableModel) tableHistorial.getModel();
+        dtm2.setRowCount(0);
+        switch(opc){
+            case "Número de boleto":
+                opc = "B.id_boleto";
+                break;
+            case "Fecha":
+                opc = "F.dia";
+                break;
+            case "Hora":
+                opc = "F.hora_inicio";
+                break;
+            case "Pelicula":
+                opc = "P.nombre_pelicula";
+                break;
+            case "Sala":
+                opc = "nombre_sala";
+                break;
+            case "Sucursal":
+                opc = "nombre_sucursal";
+                break;
+            default:
+                opc = "B.id_boleto";
+        
+        }
+        
+        String query = "qry=SELECT B.id_boleto AS numero_boleto, B.asiento, P.nombre_pelicula, F.dia, F.hora_inicio, SL.nombre AS nombre_sala, S.nombre AS nombre_sucursal" +
+                        " FROM boletos B" +
+                        " INNER JOIN funciones F ON B.id_funcion = F.id_funcion" +
+                        " INNER JOIN peliculas P ON F.id_pelicula = P.id_pelicula" +
+                        " INNER JOIN salas SL ON F.id_sala = SL.id_sala" +
+                        " INNER JOIN sucursales_has_funciones SHF ON SHF.id_funcion = F.id_funcion" +
+                        " INNER JOIN sucursales S ON S.id_sucursal = SHF.id_sucursal" +
+                        " WHERE B.id_usuario = "+idUsuario+
+                        " GROUP BY B.id_boleto" +
+                        " ORDER BY "+opc;
+        
+        String response = HttpRequest.post("http://localhost:80/Phpfiles/inner_join.php").send(query).body();
+        JsonObject jsonRecived = new JsonParser().parse(response).getAsJsonObject();
+        System.out.println("json recieved: "+jsonRecived);
+        JsonObject output = jsonRecived.getAsJsonObject("output");
+        
+        for (int i = 0; i < output.size(); i++) {
+            JsonObject boleto = output.getAsJsonObject(""+i);
+            
+            String numBoleto = boleto.get("numero_boleto").toString().substring(1,boleto.get("numero_boleto").toString().length()-1);
+            String asiento = boleto.get("asiento").toString().substring(1,boleto.get("asiento").toString().length()-1);
+            String pelicula = boleto.get("nombre_pelicula").toString().substring(1,boleto.get("nombre_pelicula").toString().length()-1);
+            String dia = boleto.get("dia").toString().substring(1,boleto.get("dia").toString().length()-1);
+            String hora = boleto.get("hora_inicio").toString().substring(1,boleto.get("hora_inicio").toString().length()-1);
+            String sala = boleto.get("nombre_sala").toString().substring(1,boleto.get("nombre_sala").toString().length()-1);
+            String sucursal = boleto.get("nombre_sucursal").toString().substring(1,boleto.get("nombre_sucursal").toString().length()-1);
+            
+            DefaultTableModel model = (DefaultTableModel) tableHistorial.getModel();
+            model.addRow(new Object[]{numBoleto,asiento,pelicula,dia,hora,sala,sucursal});
+        }
+        
     }
     
     private void SaveSession(JsonObject datosUsuario){
@@ -2071,6 +2142,12 @@ public class Principal extends javax.swing.JFrame {
         
         }
     }//GEN-LAST:event_comboOpcionesActionPerformed
+
+    private void comboOrderBtItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboOrderBtItemStateChanged
+        String a = evt.getItem().toString();
+        System.out.println("aaa::: "+a);
+        cargarHistorial(a);
+    }//GEN-LAST:event_comboOrderBtItemStateChanged
     
     private void labelReturnSideBarMouseClicked(MouseEvent evt) {
         showSideBar();
@@ -2560,6 +2637,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JPanel cardPrincipal;
     private javax.swing.JPanel cardRegistro;
     private javax.swing.JComboBox<String> comboOpciones;
+    private javax.swing.JComboBox<String> comboOrderBt;
     private javax.swing.JTextField fieldApellidosAcceso;
     private javax.swing.JTextField fieldApellidosSignUp;
     private javax.swing.JTextField fieldBusqueda;
@@ -2574,7 +2652,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JTextField fieldUsuarioAcceso;
     private javax.swing.JTextField fieldUsuarioLogIn;
     private javax.swing.JTextField fieldUsuarioSignUp;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JInternalFrame jInternalFrame1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -2638,7 +2715,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator7;
     private javax.swing.JSeparator jSeparator8;
     private javax.swing.JSeparator jSeparator9;
-    private javax.swing.JTable jTable1;
     private javax.swing.JScrollPane jsp;
     private javax.swing.JLabel labelBoletosElegidos;
     private javax.swing.JLabel labelCarteleraIcon;
@@ -2694,6 +2770,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JPanel pantalla;
     private javax.swing.JPanel sidePanel;
     private javax.swing.JLabel slider;
+    private javax.swing.JTable tableHistorial;
     private javax.swing.JTable tableHorarios;
     // End of variables declaration//GEN-END:variables
      
