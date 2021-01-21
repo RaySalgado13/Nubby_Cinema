@@ -56,7 +56,7 @@ import org.edisoncor.gui.panel.PanelImage;
 public class Principal extends javax.swing.JFrame {
     int cantCartelera;
     ArrayList<JLabel> labelsCartelera;
-    JSONArray cartelera;
+    JsonArray cartelera;
     JLabel labelReturnSideBar;
     CardLayout cards;
     int sliderPosition = 0;
@@ -77,12 +77,14 @@ public class Principal extends javax.swing.JFrame {
         initComponents(true);
         cards = (CardLayout)(panelCards).getLayout();
         elegidos = new ArrayList<>();
+        //ThreadBusqueda hilo = new ThreadBusqueda();
+       //hilo.execute();
     }
     
     private void initCartelera(){
         String response = HttpRequest.post("http://localhost:80/Phpfiles/ver_catalogo.php").send("table=peliculas").body();
         JsonObject jsonRecived = new JsonParser().parse(response).getAsJsonObject();
-        JsonArray cartelera = jsonRecived.get("output").getAsJsonArray();
+        cartelera = jsonRecived.get("output").getAsJsonArray();
         jsp.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         jsp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
         
@@ -128,27 +130,7 @@ public class Principal extends javax.swing.JFrame {
         
     }
     
-    
-    /*private void initCartelera(){
-        
-    }*/
-    
-    /*private String[] takeImage(){
-        File f = new File(getClass().getResource("/Images").getFile());
-        String[] images = f.list();
-        return images;
-    }
-    
-    private void showinSlide(int index){
-    
-        String[] images = takeImage();
-        String img = images[index];
-        ImageIcon icon = new ImageIcon(getClass().getResource("/Images/"+img));
-        Image image = icon.getImage().getScaledInstance(slider.getWidth(), slider.getHeight(), Image.SCALE_SMOOTH);
-        slider.setIcon(new ImageIcon(image));
-    }*/
-    
-    
+
     
     private void showLabelOptions(){
         labelReturnSideBar = new javax.swing.JLabel();
@@ -426,6 +408,7 @@ public class Principal extends javax.swing.JFrame {
         jLabel40 = new javax.swing.JLabel();
         jLabel41 = new javax.swing.JLabel();
         labelConfirmarAsientos = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
 
         jInternalFrame1.setVisible(true);
 
@@ -550,6 +533,11 @@ public class Principal extends javax.swing.JFrame {
         fieldBusqueda.setForeground(new java.awt.Color(255, 255, 255));
         fieldBusqueda.setAutoscrolls(false);
         fieldBusqueda.setBorder(null);
+        fieldBusqueda.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                fieldBusquedaKeyTyped(evt);
+            }
+        });
 
         labelUserIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tecnm/tap/nubby_cinema/Resources/Images/icons/user_male.png"))); // NOI18N
 
@@ -1821,6 +1809,19 @@ public class Principal extends javax.swing.JFrame {
 
         panelCards.add(cardConfirmar, "cardConfirmar");
 
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 986, Short.MAX_VALUE)
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 737, Short.MAX_VALUE)
+        );
+
+        panelCards.add(jPanel3, "cardTest");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -1907,22 +1908,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_labelMinimizeMouseClicked
 
     private void labelRightMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelRightMouseClicked
-        /*new Thread();
-        try {
-            Thread.sleep(300);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        int p = this.slider.getX();
-        
-        if(p > -1){
-            
-        }
-        sliderPosition++;
-        if(sliderPosition>=takeImage().length){
-            sliderPosition=takeImage().length-1;
-        }
-        showinSlide(sliderPosition);*/
+       
     }//GEN-LAST:event_labelRightMouseClicked
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
@@ -1950,7 +1936,147 @@ public class Principal extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null,"Usuario y/o contraseña incorrecta");
         }  
     }//GEN-LAST:event_btnLoginActionPerformed
+    
+    private void btnRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistroActionPerformed
+        Registrarse();
+    }//GEN-LAST:event_btnRegistroActionPerformed
 
+    private void labelRegistroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelRegistroMouseClicked
+        cards.show(panelCards, "cardRegistro");
+    }//GEN-LAST:event_labelRegistroMouseClicked
+
+    private void labelToLoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelToLoginMouseClicked
+        cards.show(panelCards, "cardCuenta");
+    }//GEN-LAST:event_labelToLoginMouseClicked
+
+    private void labelDisconnectMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelDisconnectMouseClicked
+    
+    }//GEN-LAST:event_labelDisconnectMouseClicked
+
+    private void btnComprarBoletoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComprarBoletoActionPerformed
+        if(tableHorarios.getSelectedRow() != -1){
+            cantBoletos = Integer.parseInt(labelBoletosElegidos.getText());
+            if(cantBoletos == 0){
+                JOptionPane.showMessageDialog(null,"Seleccione la cantidad de boletos");
+            }
+             
+            else{
+                int rowSelected = tableHorarios.getSelectedRow();
+                System.out.println("selected row:: "+rowSelected);
+
+                if(idUsuario == 0){
+                    if(JOptionPane.showConfirmDialog(null,"Debe iniciar sesión primero, ¿Desea iniciar con su cuenta ahora?") == 0){
+                        cards.show(panelCards, "cardCuenta");
+                    }
+                }
+                else{
+                    int idFuncion = idFunciones[rowSelected];
+                    int idSucursal = idSucursales[rowSelected];
+                    idSelected = rowSelected;
+                    System.out.println("Funcion elegida: "+idFuncion+"\nEn sucursal: "+idSucursal);
+                    
+                    seleccionAsientos(idFuncion,idSucursal,Integer.parseInt(labelBoletosElegidos.getText()));  
+                }
+            }
+  
+        }
+        else{
+            System.out.println("empty choise");
+            JOptionPane.showMessageDialog(null,"Seleccione un horario");
+        }
+    }//GEN-LAST:event_btnComprarBoletoActionPerformed
+
+    private void addBoletoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addBoletoMouseClicked
+        int boletosElegidos = Integer.parseInt(labelBoletosElegidos.getText()) + 1;
+        
+        if(boletosElegidos > 5){
+           
+            JOptionPane.showMessageDialog(null,"Sólo se puede elegir un máximo de 5 boletos");
+        }else{
+            labelBoletosElegidos.setText(""+boletosElegidos);
+        }
+        
+        
+    }//GEN-LAST:event_addBoletoMouseClicked
+
+    private void lessBoletoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lessBoletoMouseClicked
+        int boletosElegidos = Integer.parseInt(labelBoletosElegidos.getText()) - 1;
+        
+        if(boletosElegidos >= 0){
+            labelBoletosElegidos.setText(""+boletosElegidos);
+        }
+        
+    }//GEN-LAST:event_lessBoletoMouseClicked
+
+    private void btnConfirmarCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarCompraActionPerformed
+       comprarBoleto();
+    }//GEN-LAST:event_btnConfirmarCompraActionPerformed
+
+    private void btnConfirmarAsientosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarAsientosActionPerformed
+        confirmarCompra();
+    }//GEN-LAST:event_btnConfirmarAsientosActionPerformed
+
+    private void comboOpcionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboOpcionesActionPerformed
+        if(comboOpciones.getSelectedIndex() == 2){
+            File f = new File("loged.json");
+            f.delete();
+            usuario = new JsonObject();
+            idUsuario = 0;
+            logedIn = false;
+            cards.show(panelCards, "cardCuenta");
+        
+        }
+    }//GEN-LAST:event_comboOpcionesActionPerformed
+
+    private void comboOrderBtItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboOrderBtItemStateChanged
+        String a = evt.getItem().toString();
+        System.out.println("aaa::: "+a);
+        cargarHistorial(a);
+    }//GEN-LAST:event_comboOrderBtItemStateChanged
+
+    private void fieldBusquedaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fieldBusquedaKeyTyped
+        ThreadBusqueda hilo = new ThreadBusqueda();
+        hilo.execute();
+    }//GEN-LAST:event_fieldBusquedaKeyTyped
+    
+    private void labelReturnSideBarMouseClicked(MouseEvent evt) {
+        showSideBar();
+        panelOpcionesButton.remove(labelReturnSideBar);
+        panelPrincipal.repaint();
+    }
+
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new Principal().setVisible(true);
+            }
+        });
+    }
+    
     private void cargarUsuario(JsonObject datosUsuario, boolean loaded) {
         System.out.println(datosUsuario.toString());
         
@@ -2050,141 +2176,6 @@ public class Principal extends javax.swing.JFrame {
         
         }
     
-    }
-    
-    private void btnRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistroActionPerformed
-        Registrarse();
-    }//GEN-LAST:event_btnRegistroActionPerformed
-
-    private void labelRegistroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelRegistroMouseClicked
-        cards.show(panelCards, "cardRegistro");
-    }//GEN-LAST:event_labelRegistroMouseClicked
-
-    private void labelToLoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelToLoginMouseClicked
-        cards.show(panelCards, "cardCuenta");
-    }//GEN-LAST:event_labelToLoginMouseClicked
-
-    private void labelDisconnectMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelDisconnectMouseClicked
-    
-    }//GEN-LAST:event_labelDisconnectMouseClicked
-
-    private void btnComprarBoletoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComprarBoletoActionPerformed
-        if(tableHorarios.getSelectedRow() != -1){
-            cantBoletos = Integer.parseInt(labelBoletosElegidos.getText());
-            if(cantBoletos == 0){
-                JOptionPane.showMessageDialog(null,"Seleccione la cantidad de boletos");
-            }
-             
-            else{
-                int rowSelected = tableHorarios.getSelectedRow();
-                System.out.println("selected row:: "+rowSelected);
-
-                if(idUsuario == 0){
-                    if(JOptionPane.showConfirmDialog(null,"Debe iniciar sesión primero, ¿Desea iniciar con su cuenta ahora?") == 0){
-                        cards.show(panelCards, "cardCuenta");
-                    }
-                }
-                else{
-                    int idFuncion = idFunciones[rowSelected];
-                    int idSucursal = idSucursales[rowSelected];
-                    idSelected = rowSelected;
-                    System.out.println("Funcion elegida: "+idFuncion+"\nEn sucursal: "+idSucursal);
-                    
-                    seleccionAsientos(idFuncion,idSucursal,Integer.parseInt(labelBoletosElegidos.getText()));  
-                }
-            }
-  
-        }
-        else{
-            System.out.println("empty choise");
-            JOptionPane.showMessageDialog(null,"Seleccione un horario");
-        }
-    }//GEN-LAST:event_btnComprarBoletoActionPerformed
-
-    private void addBoletoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addBoletoMouseClicked
-        int boletosElegidos = Integer.parseInt(labelBoletosElegidos.getText()) + 1;
-        
-        if(boletosElegidos > 5){
-           
-            JOptionPane.showMessageDialog(null,"Sólo se puede elegir un máximo de 5 boletos");
-        }else{
-            labelBoletosElegidos.setText(""+boletosElegidos);
-        }
-        
-        
-    }//GEN-LAST:event_addBoletoMouseClicked
-
-    private void lessBoletoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lessBoletoMouseClicked
-        int boletosElegidos = Integer.parseInt(labelBoletosElegidos.getText()) - 1;
-        
-        if(boletosElegidos >= 0){
-            labelBoletosElegidos.setText(""+boletosElegidos);
-        }
-        
-    }//GEN-LAST:event_lessBoletoMouseClicked
-
-    private void btnConfirmarCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarCompraActionPerformed
-       comprarBoleto();
-    }//GEN-LAST:event_btnConfirmarCompraActionPerformed
-
-    private void btnConfirmarAsientosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarAsientosActionPerformed
-        confirmarCompra();
-    }//GEN-LAST:event_btnConfirmarAsientosActionPerformed
-
-    private void comboOpcionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboOpcionesActionPerformed
-        if(comboOpciones.getSelectedIndex() == 2){
-            File f = new File("loged.json");
-            f.delete();
-            usuario = new JsonObject();
-            idUsuario = 0;
-            logedIn = false;
-            cards.show(panelCards, "cardCuenta");
-        
-        }
-    }//GEN-LAST:event_comboOpcionesActionPerformed
-
-    private void comboOrderBtItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboOrderBtItemStateChanged
-        String a = evt.getItem().toString();
-        System.out.println("aaa::: "+a);
-        cargarHistorial(a);
-    }//GEN-LAST:event_comboOrderBtItemStateChanged
-    
-    private void labelReturnSideBarMouseClicked(MouseEvent evt) {
-        showSideBar();
-        panelOpcionesButton.remove(labelReturnSideBar);
-        panelPrincipal.repaint();
-    }
-
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Principal().setVisible(true);
-            }
-        });
     }
     
     private void SeleccionarPelicula(int id, JsonObject pelicula){
@@ -2608,13 +2599,56 @@ public class Principal extends javax.swing.JFrame {
             System.out.println("::FIN DE HILO::");
         
         }
-        
-        
-        
-        
+    }
     
+    private class ThreadBusqueda extends SwingWorker{
+
+        @Override
+        protected Object doInBackground() throws Exception {
+            while (true) {                
+                if(!fieldBusqueda.getText().isBlank()){
+                    String query = "qry=SELECT * FROM peliculas WHERE nombre_pelicula LIKE '"+fieldBusqueda.getText()+"%'";
+                    String response = HttpRequest.post("http://localhost:80/Phpfiles/inner_join.php").send(query).body(); 
+                    JsonObject jsonRecived = new JsonParser().parse(response).getAsJsonObject();
+                    JsonObject output = jsonRecived.getAsJsonObject("output");
+                    
+                    System.out.println("Hilo busqueda:: Elementos encontrados: "+output.size());
+                    
+                    for (int i = 0; i < output.size(); i++) {
+                        JsonObject pelicula = output.getAsJsonObject(""+i);
+                        publish(pelicula);
+                    }
+                   break;
+                }
+            }
+            
+            return null;
+        }
+
+        @Override
+        protected void process(List chunks) {
+            //super.process(chunks); //To change body of generated methods, choose Tools | Templates.
+            
+            for (int i = 0; i < chunks.size(); i++) {
+                System.out.println("chunks:: i"+chunks.get(i));
+                
+            }
+            cards.show(panelCards, "cardTest");
+        }
+
+        @Override
+        protected void done() {
+            super.done(); //To change body of generated methods, choose Tools | Templates.
+            System.out.println("FIN DE HILO BUSQUEDA");
+        }
+        
+        
+        
+        
     
     }
+    
+    
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel addBoleto;
@@ -2698,6 +2732,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
