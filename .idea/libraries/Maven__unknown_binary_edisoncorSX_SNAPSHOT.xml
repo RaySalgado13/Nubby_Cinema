@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: unknown.binary:edisoncorSX:SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/unknown/binary/edisoncorSX/SNAPSHOT/edisoncorSX-SNAPSHOT.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/unknown/binary/edisoncorSX/SNAPSHOT/edisoncorSX-SNAPSHOT-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/unknown/binary/edisoncorSX/SNAPSHOT/edisoncorSX-SNAPSHOT-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

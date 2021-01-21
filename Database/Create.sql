@@ -157,14 +157,15 @@ START TRANSACTION;
     );
     
     CREATE TABLE boletos(
-        id_boleto BIGINT UNSIGNED NOT NULL PRIMARY KEY, --(id_sucursal)(DDMMAA)(id_pelicula)(id_sala)(fila[0-5])(asiento)
-                                                        --216012153518
+        id_boleto INT NOT NULL AUTO_INCREMENT PRIMARY KEY, 
         id_funcion INT NOT NULL,
+        id_sucursal INT NOT NULL,
         id_usuario INT NOT NULL,
         asiento VARCHAR(3) NOT NULL,
         valido BOOLEAN NULL,
 
         FOREIGN KEY (id_funcion) REFERENCES funciones(id_funcion),
+        FOREIGN KEY (id_sucursal) REFERENCES sucursales(id_sucursal),
         FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario) 
     );
 
@@ -183,4 +184,5 @@ START TRANSACTION;
 COMMIT;
 
 --ALTER TABLE peliculas ADD Sinopsis VARCHAR(300);
+
 

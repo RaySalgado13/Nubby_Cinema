@@ -34,6 +34,8 @@ import com.google.gson.*;
 import com.github.kevinsawicki.http.HttpRequest;
 import java.awt.Cursor;
 import java.awt.Graphics2D;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
@@ -42,6 +44,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JToggleButton;
+import javax.swing.table.DefaultTableModel;
 import org.edisoncor.gui.panel.PanelImage;
 
 /**
@@ -56,15 +61,22 @@ public class Principal extends javax.swing.JFrame {
     CardLayout cards;
     int sliderPosition = 0;
     boolean logedIn = false;
+    int idUsuario;
     JsonObject usuario;
-    
-    
+    //------------------------
+    int[] idFunciones;
+    int[] idSucursales;
+    int idSelected;
+    String peliculaSeleccionada;
+    ArrayList<String> elegidos;
+    int cantBoletos;
     
     public Principal() {
         setSize(Toolkit.getDefaultToolkit().getScreenSize());
         initComponents();
         initComponents(true);
         cards = (CardLayout)(panelCards).getLayout();
+        elegidos = new ArrayList<>();
     }
     
     private void initCartelera(){
@@ -106,6 +118,8 @@ public class Principal extends javax.swing.JFrame {
                 String datosUsuario = new String(Files.readAllBytes(Paths.get("loged.json")));
                 JsonObject jsonReaded = new JsonParser().parse(datosUsuario).getAsJsonObject();
                 this.usuario = jsonReaded;
+                this.idUsuario = usuario.get("id_usuario").getAsInt();
+                System.out.println("Sesion iniciada con id_usuario: "+idUsuario);
                 cargarUsuario(usuario,true);
                 
             }
@@ -363,7 +377,13 @@ public class Principal extends javax.swing.JFrame {
         jSeparator15 = new javax.swing.JSeparator();
         labelDisconnect = new javax.swing.JLabel();
         jLabel38 = new javax.swing.JLabel();
+        comboOpciones = new javax.swing.JComboBox<>();
         panelHistorialCompras = new javax.swing.JPanel();
+        panelImage4 = new org.edisoncor.gui.panel.PanelImage();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        jLabel42 = new javax.swing.JLabel();
         cardCartelera = new javax.swing.JPanel();
         jsp = new javax.swing.JScrollPane();
         panelPeliculas = new org.edisoncor.gui.panel.PanelImage();
@@ -380,6 +400,32 @@ public class Principal extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         areaSinopsis = new javax.swing.JTextArea();
         panelHorarios = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tableHorarios = new javax.swing.JTable();
+        jPanel2 = new javax.swing.JPanel();
+        labelBoletosElegidos = new javax.swing.JLabel();
+        addBoleto = new javax.swing.JLabel();
+        lessBoleto = new javax.swing.JLabel();
+        btnComprarBoleto = new javax.swing.JButton();
+        cardAsientos = new javax.swing.JPanel();
+        panelEleccionAsientos = new javax.swing.JPanel();
+        panelConfirmarCompra = new javax.swing.JPanel();
+        btnConfirmarAsientos = new javax.swing.JButton();
+        pantalla = new javax.swing.JPanel();
+        jLabel39 = new javax.swing.JLabel();
+        cardConfirmar = new javax.swing.JPanel();
+        panelConfirmarPelicula = new org.edisoncor.gui.panel.PanelImage();
+        jPanel1 = new javax.swing.JPanel();
+        panelNice1 = new org.edisoncor.gui.panel.PanelNice();
+        btnConfirmarCompra = new javax.swing.JButton();
+        labelConfirmarNombre = new javax.swing.JLabel();
+        labelConfirmarDia = new javax.swing.JLabel();
+        labelConfirmarHora = new javax.swing.JLabel();
+        labelConfirmarSala = new javax.swing.JLabel();
+        labelConfirmarSucursal = new javax.swing.JLabel();
+        jLabel40 = new javax.swing.JLabel();
+        jLabel41 = new javax.swing.JLabel();
+        labelConfirmarAsientos = new javax.swing.JLabel();
 
         jInternalFrame1.setVisible(true);
 
@@ -669,7 +715,7 @@ public class Principal extends javax.swing.JFrame {
                             .addComponent(labelPeli2)
                             .addGap(45, 45, 45)
                             .addComponent(labelPeli3))))
-                .addContainerGap(129, Short.MAX_VALUE))
+                .addContainerGap(200, Short.MAX_VALUE))
         );
         cardPrincipalLayout.setVerticalGroup(
             cardPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -820,7 +866,7 @@ public class Principal extends javax.swing.JFrame {
                 .addGroup(cardCuentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel15)
                     .addComponent(labelRegistro))
-                .addContainerGap(109, Short.MAX_VALUE))
+                .addContainerGap(141, Short.MAX_VALUE))
         );
 
         panelCards.add(cardCuenta, "cardCuenta");
@@ -1040,7 +1086,7 @@ public class Principal extends javax.swing.JFrame {
                 .addComponent(jSeparator9, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnRegistro)
-                .addContainerGap(89, Short.MAX_VALUE))
+                .addContainerGap(121, Short.MAX_VALUE))
         );
 
         panelCards.add(cardRegistro, "cardRegistro");
@@ -1117,6 +1163,14 @@ public class Principal extends javax.swing.JFrame {
 
         jLabel38.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tecnm/tap/nubby_cinema/Resources/Images/INFORMACIÓN DE LA CUENTA.png"))); // NOI18N
 
+        comboOpciones.setFont(new java.awt.Font("Leelawadee UI", 1, 12)); // NOI18N
+        comboOpciones.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Opciones", "Ayuda", "Cerrar Sesión" }));
+        comboOpciones.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboOpcionesActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panelInfoGeneralLayout = new javax.swing.GroupLayout(panelInfoGeneral);
         panelInfoGeneral.setLayout(panelInfoGeneralLayout);
         panelInfoGeneralLayout.setHorizontalGroup(
@@ -1124,7 +1178,14 @@ public class Principal extends javax.swing.JFrame {
             .addGroup(panelInfoGeneralLayout.createSequentialGroup()
                 .addGroup(panelInfoGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelInfoGeneralLayout.createSequentialGroup()
-                        .addGap(139, 139, 139)
+                        .addContainerGap()
+                        .addComponent(panelImage1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(47, 47, 47)
+                        .addComponent(jLabel38)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 207, Short.MAX_VALUE)
+                        .addComponent(comboOpciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelInfoGeneralLayout.createSequentialGroup()
+                        .addGap(140, 140, 140)
                         .addGroup(panelInfoGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panelInfoGeneralLayout.createSequentialGroup()
                                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1172,15 +1233,10 @@ public class Principal extends javax.swing.JFrame {
                                             .addGroup(panelInfoGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                                 .addComponent(jSeparator13, javax.swing.GroupLayout.Alignment.LEADING)
                                                 .addComponent(fieldApellidosAcceso, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))))
-                    .addGroup(panelInfoGeneralLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(labelDisconnect))
-                    .addGroup(panelInfoGeneralLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(panelImage1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(47, 47, 47)
-                        .addComponent(jLabel38)))
-                .addGap(18, 254, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelInfoGeneralLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(labelDisconnect)))
+                .addContainerGap())
         );
         panelInfoGeneralLayout.setVerticalGroup(
             panelInfoGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1188,8 +1244,9 @@ public class Principal extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(panelInfoGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(panelImage1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel38))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
+                    .addComponent(jLabel38)
+                    .addComponent(comboOpciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(panelInfoGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(panelInfoGeneralLayout.createSequentialGroup()
@@ -1236,7 +1293,7 @@ public class Principal extends javax.swing.JFrame {
                             .addComponent(jLabel37, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSeparator15, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 125, Short.MAX_VALUE)
                 .addComponent(labelDisconnect)
                 .addContainerGap())
         );
@@ -1245,15 +1302,86 @@ public class Principal extends javax.swing.JFrame {
 
         panelHistorialCompras.setBackground(new java.awt.Color(255, 255, 255));
 
+        panelImage4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tecnm/tap/nubby_cinema/Resources/Images/historial de compras.png"))); // NOI18N
+
+        javax.swing.GroupLayout panelImage4Layout = new javax.swing.GroupLayout(panelImage4);
+        panelImage4.setLayout(panelImage4Layout);
+        panelImage4Layout.setHorizontalGroup(
+            panelImage4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 429, Short.MAX_VALUE)
+        );
+        panelImage4Layout.setVerticalGroup(
+            panelImage4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 186, Short.MAX_VALUE)
+        );
+
+        jTable1.setBackground(new java.awt.Color(255, 255, 255));
+        jTable1.setFont(new java.awt.Font("Leelawadee UI", 1, 14)); // NOI18N
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Número de boleto", "Pelicula", "Fecha", "Dia", "Sala", "Sucursal"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTable1.setGridColor(new java.awt.Color(102, 102, 102));
+        jScrollPane3.setViewportView(jTable1);
+
+        jComboBox1.setFont(new java.awt.Font("Leelawadee UI", 1, 14)); // NOI18N
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Número de boleto", "Fecha", "Hora", "Pelicula", "Sala", "Sucursal", " " }));
+
+        jLabel42.setFont(new java.awt.Font("Leelawadee UI", 1, 12)); // NOI18N
+        jLabel42.setText("Ordenar por");
+
         javax.swing.GroupLayout panelHistorialComprasLayout = new javax.swing.GroupLayout(panelHistorialCompras);
         panelHistorialCompras.setLayout(panelHistorialComprasLayout);
         panelHistorialComprasLayout.setHorizontalGroup(
             panelHistorialComprasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 907, Short.MAX_VALUE)
+            .addGroup(panelHistorialComprasLayout.createSequentialGroup()
+                .addGap(39, 39, 39)
+                .addGroup(panelHistorialComprasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelHistorialComprasLayout.createSequentialGroup()
+                        .addComponent(jLabel42)
+                        .addGap(222, 222, 222)
+                        .addComponent(panelImage4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 220, Short.MAX_VALUE))
+                    .addGroup(panelHistorialComprasLayout.createSequentialGroup()
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane3))))
         );
         panelHistorialComprasLayout.setVerticalGroup(
             panelHistorialComprasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 679, Short.MAX_VALUE)
+            .addGroup(panelHistorialComprasLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelHistorialComprasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelHistorialComprasLayout.createSequentialGroup()
+                        .addComponent(panelImage4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelHistorialComprasLayout.createSequentialGroup()
+                        .addComponent(jLabel42)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                .addGroup(panelHistorialComprasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 501, Short.MAX_VALUE)
+                    .addGroup(panelHistorialComprasLayout.createSequentialGroup()
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
 
         cardAcceso.addTab("Historial de compas", panelHistorialCompras);
@@ -1268,11 +1396,11 @@ public class Principal extends javax.swing.JFrame {
         cardCartelera.setLayout(cardCarteleraLayout);
         cardCarteleraLayout.setHorizontalGroup(
             cardCarteleraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jsp, javax.swing.GroupLayout.DEFAULT_SIZE, 909, Short.MAX_VALUE)
+            .addComponent(jsp, javax.swing.GroupLayout.DEFAULT_SIZE, 980, Short.MAX_VALUE)
         );
         cardCarteleraLayout.setVerticalGroup(
             cardCarteleraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jsp, javax.swing.GroupLayout.DEFAULT_SIZE, 705, Short.MAX_VALUE)
+            .addComponent(jsp, javax.swing.GroupLayout.DEFAULT_SIZE, 737, Short.MAX_VALUE)
         );
 
         panelCards.add(cardCartelera, "cardCartelera");
@@ -1338,7 +1466,7 @@ public class Principal extends javax.swing.JFrame {
                             .addComponent(jLabel43)
                             .addComponent(labelDirectorPelicula))
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 895, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 966, Short.MAX_VALUE))
                 .addContainerGap())
         );
         panelSinopsisLayout.setVerticalGroup(
@@ -1357,7 +1485,7 @@ public class Principal extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel43)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1365,15 +1493,120 @@ public class Principal extends javax.swing.JFrame {
 
         panelHorarios.setBackground(new java.awt.Color(255, 255, 255));
 
+        tableHorarios.setBackground(new java.awt.Color(255, 255, 255));
+        tableHorarios.setFont(new java.awt.Font("Leelawadee UI", 0, 18)); // NOI18N
+        tableHorarios.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Fecha", "Hora", "Sala", "Precio", "Sucursal"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tableHorarios.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        tableHorarios.getTableHeader().setResizingAllowed(false);
+        tableHorarios.getTableHeader().setReorderingAllowed(false);
+        jScrollPane2.setViewportView(tableHorarios);
+
+        jPanel2.setBackground(new java.awt.Color(51, 51, 51));
+
+        labelBoletosElegidos.setFont(new java.awt.Font("Leelawadee UI", 1, 18)); // NOI18N
+        labelBoletosElegidos.setText("0");
+
+        addBoleto.setFont(new java.awt.Font("Leelawadee UI", 1, 18)); // NOI18N
+        addBoleto.setText("+");
+        addBoleto.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        addBoleto.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                addBoletoMouseClicked(evt);
+            }
+        });
+
+        lessBoleto.setFont(new java.awt.Font("Leelawadee UI", 1, 18)); // NOI18N
+        lessBoleto.setText("-");
+        lessBoleto.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lessBoleto.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lessBoletoMouseClicked(evt);
+            }
+        });
+
+        btnComprarBoleto.setText("Comprar Boleto");
+        btnComprarBoleto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnComprarBoletoActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lessBoleto)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(labelBoletosElegidos)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(addBoleto)
+                .addGap(18, 18, 18)
+                .addComponent(btnComprarBoleto, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(13, 13, 13)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelBoletosElegidos)
+                    .addComponent(addBoleto)
+                    .addComponent(lessBoleto)
+                    .addComponent(btnComprarBoleto, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE))
+                .addContainerGap(28, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout panelHorariosLayout = new javax.swing.GroupLayout(panelHorarios);
         panelHorarios.setLayout(panelHorariosLayout);
         panelHorariosLayout.setHorizontalGroup(
             panelHorariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 907, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 978, Short.MAX_VALUE)
         );
         panelHorariosLayout.setVerticalGroup(
             panelHorariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 395, Short.MAX_VALUE)
+            .addGroup(panelHorariosLayout.createSequentialGroup()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 338, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         panelsPelicula.addTab("Horarios Disponibles", panelHorarios);
@@ -1395,11 +1628,199 @@ public class Principal extends javax.swing.JFrame {
 
         panelCards.add(cardPelicula, "cardPelicula");
 
+        cardAsientos.setBackground(new java.awt.Color(255, 255, 255));
+
+        panelEleccionAsientos.setBackground(new java.awt.Color(255, 255, 255));
+        panelEleccionAsientos.setLayout(new java.awt.GridLayout(6, 13, 10, 10));
+
+        panelConfirmarCompra.setBackground(new java.awt.Color(51, 51, 51));
+
+        btnConfirmarAsientos.setText("Confirmar Asientos");
+        btnConfirmarAsientos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConfirmarAsientosActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panelConfirmarCompraLayout = new javax.swing.GroupLayout(panelConfirmarCompra);
+        panelConfirmarCompra.setLayout(panelConfirmarCompraLayout);
+        panelConfirmarCompraLayout.setHorizontalGroup(
+            panelConfirmarCompraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelConfirmarCompraLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(btnConfirmarAsientos, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        panelConfirmarCompraLayout.setVerticalGroup(
+            panelConfirmarCompraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(btnConfirmarAsientos, javax.swing.GroupLayout.DEFAULT_SIZE, 78, Short.MAX_VALUE)
+        );
+
+        pantalla.setBackground(new java.awt.Color(0, 0, 0));
+
+        jLabel39.setBackground(new java.awt.Color(153, 153, 153));
+        jLabel39.setFont(new java.awt.Font("Leelawadee UI", 2, 12)); // NOI18N
+        jLabel39.setText("PANTALLA");
+
+        javax.swing.GroupLayout pantallaLayout = new javax.swing.GroupLayout(pantalla);
+        pantalla.setLayout(pantallaLayout);
+        pantallaLayout.setHorizontalGroup(
+            pantallaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pantallaLayout.createSequentialGroup()
+                .addGap(421, 421, 421)
+                .addComponent(jLabel39)
+                .addContainerGap(501, Short.MAX_VALUE))
+        );
+        pantallaLayout.setVerticalGroup(
+            pantallaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pantallaLayout.createSequentialGroup()
+                .addComponent(jLabel39)
+                .addGap(0, 7, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout cardAsientosLayout = new javax.swing.GroupLayout(cardAsientos);
+        cardAsientos.setLayout(cardAsientosLayout);
+        cardAsientosLayout.setHorizontalGroup(
+            cardAsientosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(panelEleccionAsientos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pantalla, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(panelConfirmarCompra, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        cardAsientosLayout.setVerticalGroup(
+            cardAsientosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(cardAsientosLayout.createSequentialGroup()
+                .addComponent(pantalla, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panelEleccionAsientos, javax.swing.GroupLayout.PREFERRED_SIZE, 624, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panelConfirmarCompra, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        panelCards.add(cardAsientos, "cardAsientos");
+
+        cardConfirmar.setBackground(new java.awt.Color(255, 255, 255));
+
+        panelConfirmarPelicula.setBackground(new java.awt.Color(204, 255, 102));
+
+        javax.swing.GroupLayout panelConfirmarPeliculaLayout = new javax.swing.GroupLayout(panelConfirmarPelicula);
+        panelConfirmarPelicula.setLayout(panelConfirmarPeliculaLayout);
+        panelConfirmarPeliculaLayout.setHorizontalGroup(
+            panelConfirmarPeliculaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 173, Short.MAX_VALUE)
+        );
+        panelConfirmarPeliculaLayout.setVerticalGroup(
+            panelConfirmarPeliculaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 224, Short.MAX_VALUE)
+        );
+
+        jPanel1.setBackground(new java.awt.Color(51, 51, 51));
+
+        panelNice1.setBackground(new java.awt.Color(51, 51, 51));
+
+        btnConfirmarCompra.setText("Confirmar Compra");
+        btnConfirmarCompra.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConfirmarCompraActionPerformed(evt);
+            }
+        });
+        panelNice1.add(btnConfirmarCompra, java.awt.BorderLayout.CENTER);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(panelNice1, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(panelNice1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        labelConfirmarNombre.setFont(new java.awt.Font("Leelawadee UI", 1, 18)); // NOI18N
+        labelConfirmarNombre.setText("Nombre pelicula");
+
+        labelConfirmarDia.setFont(new java.awt.Font("Leelawadee UI", 1, 18)); // NOI18N
+        labelConfirmarDia.setText("dia");
+
+        labelConfirmarHora.setFont(new java.awt.Font("Leelawadee UI", 1, 18)); // NOI18N
+        labelConfirmarHora.setText("Hora de inicio");
+
+        labelConfirmarSala.setFont(new java.awt.Font("Leelawadee", 1, 18)); // NOI18N
+        labelConfirmarSala.setText("Sala");
+
+        labelConfirmarSucursal.setFont(new java.awt.Font("Leelawadee UI", 1, 18)); // NOI18N
+        labelConfirmarSucursal.setText("sucursal");
+
+        jLabel41.setBackground(new java.awt.Color(51, 51, 51));
+        jLabel41.setFont(new java.awt.Font("Leelawadee UI", 1, 24)); // NOI18N
+        jLabel41.setText("CONFIRMAR DATOS DE COMPRA");
+
+        labelConfirmarAsientos.setFont(new java.awt.Font("Leelawadee UI", 1, 18)); // NOI18N
+        labelConfirmarAsientos.setText("Asientos");
+
+        javax.swing.GroupLayout cardConfirmarLayout = new javax.swing.GroupLayout(cardConfirmar);
+        cardConfirmar.setLayout(cardConfirmarLayout);
+        cardConfirmarLayout.setHorizontalGroup(
+            cardConfirmarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(cardConfirmarLayout.createSequentialGroup()
+                .addComponent(jLabel40, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(cardConfirmarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(labelConfirmarDia)
+                    .addGroup(cardConfirmarLayout.createSequentialGroup()
+                        .addComponent(labelConfirmarNombre)
+                        .addGap(264, 264, 264)
+                        .addComponent(labelConfirmarAsientos))
+                    .addComponent(labelConfirmarHora)
+                    .addComponent(labelConfirmarSala)
+                    .addComponent(labelConfirmarSucursal))
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, cardConfirmarLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(panelConfirmarPelicula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(400, 400, 400))
+            .addGroup(cardConfirmarLayout.createSequentialGroup()
+                .addGap(300, 300, 300)
+                .addComponent(jLabel41)
+                .addContainerGap(300, Short.MAX_VALUE))
+        );
+        cardConfirmarLayout.setVerticalGroup(
+            cardConfirmarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, cardConfirmarLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(panelConfirmarPelicula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel41, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
+                .addGroup(cardConfirmarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(cardConfirmarLayout.createSequentialGroup()
+                        .addGroup(cardConfirmarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(labelConfirmarNombre)
+                            .addComponent(labelConfirmarAsientos))
+                        .addGap(18, 18, 18)
+                        .addComponent(labelConfirmarDia)
+                        .addGap(18, 18, 18)
+                        .addComponent(labelConfirmarHora)
+                        .addGap(18, 18, 18)
+                        .addComponent(labelConfirmarSala)
+                        .addGap(18, 18, 18)
+                        .addComponent(labelConfirmarSucursal))
+                    .addComponent(jLabel40, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(88, 88, 88)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        panelCards.add(cardConfirmar, "cardConfirmar");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(navBar, javax.swing.GroupLayout.DEFAULT_SIZE, 1289, Short.MAX_VALUE)
+            .addComponent(navBar, javax.swing.GroupLayout.DEFAULT_SIZE, 1360, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(panelPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1451,6 +1872,8 @@ public class Principal extends javax.swing.JFrame {
 
     private void btnCarteleraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCarteleraActionPerformed
         cards.show(panelCards, "cardCartelera");
+        DefaultTableModel dtm = (DefaultTableModel) tableHorarios.getModel();
+        dtm.setRowCount(0);
     }//GEN-LAST:event_btnCarteleraActionPerformed
 
     private void labelLogoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelLogoMouseClicked
@@ -1502,22 +1925,19 @@ public class Principal extends javax.swing.JFrame {
             JsonObject datosUsuario = output.get("0").getAsJsonObject();
             JOptionPane.showMessageDialog(null,"Inicio correcto");
             
+            this.idUsuario = datosUsuario.get("id_usuario").getAsInt();
+                System.out.println("Sesion iniciada con id_usuario: "+idUsuario);
+            
             if(boxSesion.isSelected()){
                 SaveSession(datosUsuario);
             }
-            cargarUsuario(datosUsuario,false);
-            
-            
+            cargarUsuario(datosUsuario,false);      
         }
         catch(Exception e){
             e.printStackTrace();
             System.out.println(jsonRecived.toString());
             JOptionPane.showMessageDialog(null,"Usuario y/o contraseña incorrecta");
-        }
-        
-        
-        
-        
+        }  
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void cargarUsuario(JsonObject datosUsuario, boolean loaded) {
@@ -1533,9 +1953,7 @@ public class Principal extends javax.swing.JFrame {
         logedIn = true;
         
         if(!loaded)
-            cards.show(panelCards, "cardAcceso");
-        
-        
+            cards.show(panelCards, "cardAcceso");   
     }
     
     private void SaveSession(JsonObject datosUsuario){
@@ -1548,8 +1966,23 @@ public class Principal extends javax.swing.JFrame {
         }
     }
     
+    void Registrarse(){
+        try {
+            String query = "qry=INSERT INTO usuarios VALUES(NULL, '"+fieldUsuarioSignUp.getText()+"', MD5('"+fieldContraseniaSignUp.getText()+"'), '"+fieldNombreSignUp.getText()+"', '"+fieldApellidosSignUp.getText()+"', '"+fieldCorreoSignUp.getText()+"', '"+fieldCelular.getText()+"')";
+            String response = HttpRequest.post("http://localhost:80/Phpfiles/inner_join.php").send(query).body();
+            System.out.println("Registro response:: "+response);
+            JOptionPane.showMessageDialog(null,"Registro exitoso");
+            cards.show(panelCards, "cardCuenta");
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null,"Ocurrio un error en el registro");
+        
+        }
+    
+    }
+    
     private void btnRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistroActionPerformed
-        // TODO add your handling code here:
+        Registrarse();
     }//GEN-LAST:event_btnRegistroActionPerformed
 
     private void labelRegistroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelRegistroMouseClicked
@@ -1561,15 +1994,83 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_labelToLoginMouseClicked
 
     private void labelDisconnectMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelDisconnectMouseClicked
-        if(JOptionPane.showConfirmDialog(null,"¿Está seguro que desea cerrar sesión?") == 0){
-            this.usuario = null;
-            this.logedIn = false;
-            cards.show(panelCards, "cardCuenta");
-
-            File file = new File("loged.json");
-            file.delete();
-        }
+    
     }//GEN-LAST:event_labelDisconnectMouseClicked
+
+    private void btnComprarBoletoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComprarBoletoActionPerformed
+        if(tableHorarios.getSelectedRow() != -1){
+            cantBoletos = Integer.parseInt(labelBoletosElegidos.getText());
+            if(cantBoletos == 0){
+                JOptionPane.showMessageDialog(null,"Seleccione la cantidad de boletos");
+            }
+             
+            else{
+                int rowSelected = tableHorarios.getSelectedRow();
+                System.out.println("selected row:: "+rowSelected);
+
+                if(idUsuario == 0){
+                    if(JOptionPane.showConfirmDialog(null,"Debe iniciar sesión primero, ¿Desea iniciar con su cuenta ahora?") == 0){
+                        cards.show(panelCards, "cardCuenta");
+                    }
+                }
+                else{
+                    int idFuncion = idFunciones[rowSelected];
+                    int idSucursal = idSucursales[rowSelected];
+                    idSelected = rowSelected;
+                    System.out.println("Funcion elegida: "+idFuncion+"\nEn sucursal: "+idSucursal);
+                    
+                    seleccionAsientos(idFuncion,idSucursal,Integer.parseInt(labelBoletosElegidos.getText()));  
+                }
+            }
+  
+        }
+        else{
+            System.out.println("empty choise");
+            JOptionPane.showMessageDialog(null,"Seleccione un horario");
+        }
+    }//GEN-LAST:event_btnComprarBoletoActionPerformed
+
+    private void addBoletoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addBoletoMouseClicked
+        int boletosElegidos = Integer.parseInt(labelBoletosElegidos.getText()) + 1;
+        
+        if(boletosElegidos > 5){
+           
+            JOptionPane.showMessageDialog(null,"Sólo se puede elegir un máximo de 5 boletos");
+        }else{
+            labelBoletosElegidos.setText(""+boletosElegidos);
+        }
+        
+        
+    }//GEN-LAST:event_addBoletoMouseClicked
+
+    private void lessBoletoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lessBoletoMouseClicked
+        int boletosElegidos = Integer.parseInt(labelBoletosElegidos.getText()) - 1;
+        
+        if(boletosElegidos >= 0){
+            labelBoletosElegidos.setText(""+boletosElegidos);
+        }
+        
+    }//GEN-LAST:event_lessBoletoMouseClicked
+
+    private void btnConfirmarCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarCompraActionPerformed
+       comprarBoleto();
+    }//GEN-LAST:event_btnConfirmarCompraActionPerformed
+
+    private void btnConfirmarAsientosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarAsientosActionPerformed
+        confirmarCompra();
+    }//GEN-LAST:event_btnConfirmarAsientosActionPerformed
+
+    private void comboOpcionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboOpcionesActionPerformed
+        if(comboOpciones.getSelectedIndex() == 2){
+            File f = new File("loged.json");
+            f.delete();
+            usuario = new JsonObject();
+            idUsuario = 0;
+            logedIn = false;
+            cards.show(panelCards, "cardCuenta");
+        
+        }
+    }//GEN-LAST:event_comboOpcionesActionPerformed
     
     private void labelReturnSideBarMouseClicked(MouseEvent evt) {
         showSideBar();
@@ -1618,6 +2119,30 @@ public class Principal extends javax.swing.JFrame {
         JsonObject output = jsonRecived.getAsJsonObject("output");
         JsonObject data = output.getAsJsonObject("0");
         
+        /*-------Regresa las funciones de la pelicula con su dia, sala y precio----------
+        
+        SELECT A.nombre_pelicula, B.dia, C.nombre
+        FROM peliculas A INNER JOIN funciones B
+           ON A.id_pelicula = B.id_pelicula
+        INNER JOIN salas C
+           ON C.id_sala = B.id_sala
+        WHERE A.id_pelicula = 2
+        */
+        
+        /*-------Regresa las funciones de la pelicula con su fecha, sala, precio y sucursales----------
+        
+        SELECT P.nombre_pelicula,F.dia, sl.nombre AS nombre_sala, F.precio, S.nombre AS nombre_sucursal
+        FROM sucursales_has_funciones shf INNER JOIN sucursales S
+                ON S.id_sucursal = shf.id_sucursal
+        INNER JOIN funciones F
+                ON shf.id_funcion = F.id_funcion
+        INNER JOIN salas sl
+                ON F.id_sala = sl.id_sala
+        INNER JOIN peliculas P
+                ON P.id_pelicula = F.id_pelicula
+        WHERE P.id_pelicula = 1
+        */
+        
         String nombrePelicula = pelicula.get("nombre_pelicula").toString().substring(1,pelicula.get("nombre_pelicula").toString().length()-1);
         String duracion = String.valueOf(pelicula.get("duracion_minutos").toString().substring(1,pelicula.get("duracion_minutos").toString().length()-1));
         String categoria = String.valueOf(pelicula.get("categoria").toString().substring(1,pelicula.get("categoria").toString().length()-1));
@@ -1634,13 +2159,232 @@ public class Principal extends javax.swing.JFrame {
         labelCategoriaPelicula.setText("Categoría: "+categoria);
         areaSinopsis.setText(sinopsis);
         
-        
-        
-        
-        
-        
-        
+        peliculaSeleccionada = nombrePelicula;
+ 
         bannerPelicula.setIcon(img);
+        mostrarHorarios(id);
+        
+    }
+    
+    private void mostrarHorarios(int id){
+ 
+        String query = "qry=SELECT F.id_funcion, S.id_sucursal, P.nombre_pelicula,F.dia, F.hora_inicio ,sl.nombre AS nombre_sala, F.precio, S.nombre AS nombre_sucursal" +
+                    " FROM sucursales_has_funciones shf INNER JOIN sucursales S" +
+                    " ON S.id_sucursal = shf.id_sucursal" +
+                    " INNER JOIN funciones F" +
+                    " ON shf.id_funcion = F.id_funcion" +
+                    " INNER JOIN salas sl" +
+                    " ON F.id_sala = sl.id_sala" +
+                    " INNER JOIN peliculas P" +
+                    " ON P.id_pelicula = F.id_pelicula" +
+                    " WHERE P.id_pelicula = "+id;
+        
+        String response = HttpRequest.post("http://localhost:80/Phpfiles/inner_join.php").send(query).body();
+        JsonObject jsonRecived = new JsonParser().parse(response).getAsJsonObject();
+        JsonObject output = jsonRecived.getAsJsonObject("output");
+        //System.out.println("OUTPUT::::::: "+output.toString());
+        
+        JsonObject[] funciones = new JsonObject[output.size()];
+        int[] idFunciones = new int[output.size()];
+        int[] idSucursales = new int[output.size()];
+        
+        for (int i = 0; i < funciones.length; i++) {
+            funciones[i] = new JsonObject();
+            funciones[i] = output.getAsJsonObject(""+i);
+            JsonObject funcion = funciones[i];
+            
+            idFunciones[i] = funcion.get("id_funcion").getAsInt();
+            idSucursales[i] = funcion.get("id_sucursal").getAsInt();
+            
+            String fecha = funcion.get("dia").toString().substring(1,funcion.get("dia").toString().length()-1);
+            String horaInicio = funcion.get("hora_inicio").toString().substring(1,funcion.get("hora_inicio").toString().length()-1);
+            String sala = funcion.get("nombre_sala").toString().substring(1,funcion.get("nombre_sala").toString().length()-1);
+            Integer precio = funcion.get("precio").getAsInt();
+            String sucursal = funcion.get("nombre_sucursal").toString().substring(1,funcion.get("nombre_sucursal").toString().length()-1);
+
+            /*Object[] arr = {fecha,horaInicio,sala,precio,sucursal};
+            for (int j = 0; j < arr.length; j++) {
+                tableHorarios.setValueAt(arr[j], i, j);
+            }*/
+            DefaultTableModel model = (DefaultTableModel) tableHorarios.getModel();
+            model.addRow(new Object[]{fecha,horaInicio,sala,precio,sucursal});
+        }
+        
+        for (int i = 0; i < idFunciones.length; i++) {
+            System.out.println("id funcion: "+idFunciones[i]+" id Sucursal: "+idSucursales[i]);
+        }
+        
+        this.idFunciones = idFunciones;
+        this.idSucursales = idSucursales;
+    }
+
+    private void seleccionAsientos(int idFuncion, int idSucursal, int boletosElegidos) {
+        System.out.println("::::SELECCION DE ASIENTOS::::");
+        System.out.println("::id funcion = "+idFuncion+" ::idSucursal = "+idSucursal+" ::Boletos Elegidos = "+boletosElegidos);
+        String query = "qry=SELECT asiento FROM boletos WHERE id_funcion = "+idFuncion+" AND id_sucursal = "+idSucursal;
+        System.out.println("::query seleccion Asientos "+query);
+        Boolean[][] asientos = new Boolean[6][13];
+        JToggleButton[][] btnAsientos = new JToggleButton[6][13];
+        String[] tags = {"A","B","C","D","E","F"};
+        
+        String response = HttpRequest.post("http://localhost:80/Phpfiles/inner_join.php").send(query).body();
+        JsonObject jsonRecived = new JsonParser().parse(response).getAsJsonObject();
+        JsonObject output = jsonRecived.getAsJsonObject("output");
+        System.out.println("Output Asientos:"+output.toString()+" ::size "+output.size());
+        JsonObject[] nombresAsientos = new JsonObject[output.size()];
+        ArrayList<String> asientosOcupados = new ArrayList<>();
+        
+       
+        
+        for (int i = 0; i < nombresAsientos.length; i++) {
+            //nombresAsientos[i] = new JsonObject();
+            nombresAsientos[i] = output.getAsJsonObject(""+i);
+            //System.out.println("::json asignado array:: "+output.getAsJsonObject(""+i));
+            String a = nombresAsientos[i].get("asiento").toString().substring(1,nombresAsientos[i].get("asiento").toString().length()-1);
+            asientosOcupados.add(a);
+            System.out.println("::asiento asignado array:: "+nombresAsientos[i].get("asiento").toString());
+            
+        }
+        
+        //PRUEBA. ELIMINAR CUANDO SE LOGRE INSERTAR LOS VALORES DE BOLETO A LA BASE DE DATOS
+        //asientosOcupados.add("A-9");
+        //asientosOcupados.add("E-5");
+        //asientosOcupados.add("C-1");
+        //
+        
+        //Se le asignan un nombre a cada boton como asiento, los enabled se comparan mas abajo
+        for (int i = 0; i < btnAsientos.length; i++) {
+                for (int j = 0; j < btnAsientos[i].length; j++) {
+                    btnAsientos[i][j] = new JToggleButton();
+                    btnAsientos[i][j].setText(tags[i]+"-"+(j+1));
+                    btnAsientos[i][j].addActionListener(new AsientosListener(btnAsientos[i][j].getText(), idFuncion, idSucursal));
+                    panelEleccionAsientos.add(btnAsientos[i][j]);
+                }
+            }
+        
+        //Si output esta vacio entonces todos los asientos estan disponibles y se habilitan
+        if(asientosOcupados.size() == 0){
+            //Todos los asientos disponibles
+            System.out.println("::Todos los asientos disponibles::");
+            for (int i = 0; i < asientos.length; i++) {
+                for (int j = 0; j < asientos[i].length; j++) {
+                    asientos[i][j] = true;
+                    btnAsientos[i][j].setEnabled(asientos[i][j]);
+                }
+            }   
+        }
+        //Si no esta vacio, se compara con nombresAsiento y se habilita dependiendo de la matriz bool asientos
+        else{
+            for (int i = 0; i < asientos.length; i++) {
+                for (int j = 0; j < asientos[i].length; j++) {
+                        if(asientosOcupados.contains(btnAsientos[i][j].getText())){
+                            asientos[i][j] = false;
+                        }
+                        else{
+                            asientos[i][j] = true;
+                        }
+                    
+                    btnAsientos[i][j].setEnabled(asientos[i][j]);
+                }
+            }
+        }
+        
+        
+        cardAsientos.repaint();
+        cards.show(panelCards, "cardAsientos");
+        ThreadAsientos hilo = new ThreadAsientos(asientos, btnAsientos, boletosElegidos);
+        hilo.execute();
+        
+        /* Mostrar boletos>>Dejar para historial de compras
+        SELECT P.nombre_pelicula,F.dia, sl.nombre AS nombre_sala, F.precio, S.nombre AS nombre_sucursal
+        FROM sucursales_has_funciones shf INNER JOIN sucursales S
+                ON S.id_sucursal = shf.id_sucursal
+        INNER JOIN funciones F
+                ON shf.id_funcion = F.id_funcion
+        INNER JOIN salas sl
+                ON F.id_sala = sl.id_sala
+        INNER JOIN peliculas P
+                ON P.id_pelicula = F.id_pelicula
+        WHERE P.id_pelicula = 2 AND S.id_sucursal = 2
+        
+        */
+    }
+    
+    
+    private void confirmarCompra(){
+    
+        
+        String query = "qry=SELECT p.nombre_pelicula, f.dia, f.hora_inicio, sl.nombre AS nombre_sala, s.nombre AS nombre_sucursal" +
+                    " FROM sucursales_has_funciones shf INNER JOIN sucursales s" +
+                    " ON shf.id_sucursal = s.id_sucursal" +
+                    " INNER JOIN funciones f " +
+                    " ON shf.id_funcion = f.id_funcion" +
+                    " INNER JOIN salas sl" +
+                    " ON f.id_sala = sl.id_sala" +
+                    " INNER JOIN peliculas p" +
+                    " ON f.id_pelicula = p.id_pelicula" +
+                    " WHERE p.nombre_pelicula = '"+peliculaSeleccionada+"' AND f.id_funcion = "+idFunciones[idSelected]+" AND s.id_sucursal = "+idSucursales[idSelected];
+        
+       
+        String response = HttpRequest.post("http://localhost:80/Phpfiles/inner_join.php").send(query).body(); 
+        JsonObject jsonRecived = new JsonParser().parse(response).getAsJsonObject();
+        JsonObject output = jsonRecived.getAsJsonObject("output");   
+        JsonObject pelicula = output.getAsJsonObject("0");
+        System.out.println("::DATA::"+pelicula.toString());
+        
+        String nombrePelicula = pelicula.get("nombre_pelicula").toString().substring(1,pelicula.get("nombre_pelicula").toString().length()-1);
+        String dia = pelicula.get("dia").toString().substring(1,pelicula.get("dia").toString().length()-1);
+        String hora = pelicula.get("hora_inicio").toString().substring(1,pelicula.get("hora_inicio").toString().length()-1);
+        String sala =pelicula.get("nombre_sala").toString().substring(1,pelicula.get("nombre_sala").toString().length()-1);
+        String sucursal = pelicula.get("nombre_sucursal").toString().substring(1,pelicula.get("nombre_sucursal").toString().length()-1);
+        String asientosElegidos = "";
+        for (int i = 0; i < elegidos.size(); i++) {
+            asientosElegidos += elegidos.get(i) + "\n";
+        }
+        
+        labelConfirmarNombre.setText(nombrePelicula);
+        labelConfirmarDia.setText(dia);
+        labelConfirmarHora.setText(hora);
+        labelConfirmarSala.setText(sala);
+        labelConfirmarSucursal.setText(sucursal);
+        labelConfirmarAsientos.setText(asientosElegidos);
+        panelConfirmarPelicula.setIcon(new ImageIcon(getClass().getResource("/tecnm/tap/nubby_cinema/Resources/Images/Portadas Peliculas/"+nombrePelicula+".png")));
+        
+        cards.show(panelCards, "cardConfirmar");
+    }
+    
+    private void comprarBoleto(){
+        System.out.println("::cantidad de boletos a comprar: "+this.cantBoletos);
+            try {
+                for (int i = 0; i < this.cantBoletos; i++) {
+                    String query = "qry=INSERT INTO boletos VALUES(NULL, "+idFunciones[idSelected]+", "+idSucursales[idSelected]+", "+idUsuario+", '"+elegidos.get(i)+"', TRUE)";
+                    System.out.println("::query compra:: "+query);
+                    String response = HttpRequest.post("http://localhost:80/Phpfiles/inner_join.php").send(query).body(); 
+                    System.out.println("::response comora:: "+response);
+                }
+                JOptionPane.showMessageDialog(null,"Se ha realizado su compra");
+                resetDatos();
+                cards.show(panelCards, "cardPrincipal");
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null,"No se ha podido reealizar su transaccion");
+                e.printStackTrace();
+            
+        }
+    
+    }
+    
+    private void resetDatos(){
+        this.idFunciones = null;
+        this.idSucursales = null;
+        this.idSelected = 0;
+        this.peliculaSeleccionada = null;
+        this.elegidos = new ArrayList<>();
+        this.cantBoletos = 0;
+        panelEleccionAsientos.removeAll();
+        DefaultTableModel dtm = (DefaultTableModel) tableHorarios.getModel();
+        dtm.setRowCount(0);
+        tableHorarios.removeAll();
+        System.out.println("::DATOS DE COMPRA REESTABLECIDOS");
         
     }
     
@@ -1688,21 +2432,134 @@ public class Principal extends javax.swing.JFrame {
     
     }
     
+    private class AsientosListener implements ActionListener{
+        String asiento;
+        int idFuncion;
+        int idSucursal;
+        final boolean valido = true;
+        String query;
+
+        public AsientosListener() {
+        }
+
+        public AsientosListener(String asiento, int idFuncion, int idSucursal) {
+            this.asiento = asiento;
+            this.idFuncion = idFuncion;
+            this.idSucursal = idSucursal;
+            
+            query = "qry=INSERT INTO boletos VALUES(NULL,"+idFuncion+","+idSucursal+","+idUsuario+","+asiento+", TRUE)";
+            
+            
+        }
+             
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            
+        }
+    }
+    
+    private class ThreadAsientos extends SwingWorker{
+
+        Boolean[][] asientos;
+        JToggleButton[][] btnAsientos;
+        int boletosElegidos;
+        int asientosSeleccionados;
+        ArrayList<String> asientosElegidos;
+        
+        public ThreadAsientos() {
+        }
+
+        public ThreadAsientos(Boolean[][] asientos, JToggleButton[][] btnAsientos, int boletosElegidos) {
+            this.asientos = asientos;
+            this.btnAsientos = btnAsientos;
+            this.boletosElegidos = boletosElegidos;
+            this.asientosSeleccionados = 1;
+             this.asientosElegidos = new ArrayList<>();
+        }
+        
+        @Override
+        protected Object doInBackground() throws Exception {
+            try {
+               
+                while(asientosSeleccionados <= boletosElegidos){
+                    for (int i = 0; i < asientos.length; i++) {
+                        for (int j = 0; j < asientos[i].length; j++) {
+                            if(btnAsientos[i][j].isSelected()){
+                                if(!asientosElegidos.contains(btnAsientos[i][j].getText())){
+                                    asientosElegidos.add(btnAsientos[i][j].getText());
+                                    asientosSeleccionados++;
+                                }
+                            }
+                            else if(asientosElegidos.contains(btnAsientos[i][j].getText())){
+                                asientosElegidos.remove(btnAsientos[i][j].getText());
+                                asientosSeleccionados--;
+                            }
+                        }
+                    }        
+                }
+                
+                publish(asientosElegidos);
+            } catch (Exception e) {
+                System.out.println("::ERROR:: \n");
+                e.printStackTrace();
+            }
+            
+            return null;
+        }
+
+        @Override
+        protected void process(List chunks) {
+            //super.process(chunks); //To change body of generated methods, choose Tools | Templates.
+            
+            for (int i = 0; i < asientos.length; i++) {
+                for (int j = 0; j < asientos[i].length; j++) {
+                    if(!asientosElegidos.contains(btnAsientos[i][j].getText())){
+                        btnAsientos[i][j].setEnabled(false);
+                    }
+                }
+            }
+            for (String s : asientosElegidos){
+                System.out.println("::Asientos elegido:: "+s);
+                elegidos.add(s);
+            }
+            
+        }
+
+        @Override
+        protected void done() {
+            super.done(); //To change body of generated methods, choose Tools | Templates.
+            System.out.println("::FIN DE HILO::");
+        
+        }
+        
+        
+        
+        
+    
+    
+    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel addBoleto;
     private javax.swing.JTextArea areaSinopsis;
     private org.edisoncor.gui.panel.PanelImage bannerPelicula;
     private javax.swing.JCheckBox boxSesion;
     private javax.swing.JButton btnCartelera;
+    private javax.swing.JButton btnComprarBoleto;
+    private javax.swing.JButton btnConfirmarAsientos;
+    private javax.swing.JButton btnConfirmarCompra;
     private javax.swing.JButton btnCuenta;
     private javax.swing.JButton btnLogin;
     private javax.swing.JButton btnRegistro;
     private javax.swing.JTabbedPane cardAcceso;
+    private javax.swing.JPanel cardAsientos;
     private javax.swing.JPanel cardCartelera;
+    private javax.swing.JPanel cardConfirmar;
     private javax.swing.JPanel cardCuenta;
     private javax.swing.JPanel cardPelicula;
     private javax.swing.JPanel cardPrincipal;
     private javax.swing.JPanel cardRegistro;
+    private javax.swing.JComboBox<String> comboOpciones;
     private javax.swing.JTextField fieldApellidosAcceso;
     private javax.swing.JTextField fieldApellidosSignUp;
     private javax.swing.JTextField fieldBusqueda;
@@ -1717,6 +2574,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JTextField fieldUsuarioAcceso;
     private javax.swing.JTextField fieldUsuarioLogIn;
     private javax.swing.JTextField fieldUsuarioSignUp;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JInternalFrame jInternalFrame1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -1750,14 +2608,22 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel37;
     private javax.swing.JLabel jLabel38;
+    private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel40;
+    private javax.swing.JLabel jLabel41;
+    private javax.swing.JLabel jLabel42;
     private javax.swing.JLabel jLabel43;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator10;
     private javax.swing.JSeparator jSeparator12;
@@ -1772,10 +2638,18 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator7;
     private javax.swing.JSeparator jSeparator8;
     private javax.swing.JSeparator jSeparator9;
+    private javax.swing.JTable jTable1;
     private javax.swing.JScrollPane jsp;
+    private javax.swing.JLabel labelBoletosElegidos;
     private javax.swing.JLabel labelCarteleraIcon;
     private javax.swing.JLabel labelCategoriaPelicula;
     private javax.swing.JLabel labelClose;
+    private javax.swing.JLabel labelConfirmarAsientos;
+    private javax.swing.JLabel labelConfirmarDia;
+    private javax.swing.JLabel labelConfirmarHora;
+    private javax.swing.JLabel labelConfirmarNombre;
+    private javax.swing.JLabel labelConfirmarSala;
+    private javax.swing.JLabel labelConfirmarSucursal;
     private javax.swing.JLabel labelDirectorPelicula;
     private javax.swing.JLabel labelDisconnect;
     private javax.swing.JLabel labelDuracionPelicula;
@@ -1799,22 +2673,28 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel labelToLogin;
     private javax.swing.JLabel labelTwitter;
     private javax.swing.JLabel labelUserIcon;
+    private javax.swing.JLabel lessBoleto;
     private javax.swing.JPanel navBar;
     private javax.swing.JPanel panelCards;
+    private javax.swing.JPanel panelConfirmarCompra;
+    private org.edisoncor.gui.panel.PanelImage panelConfirmarPelicula;
+    private javax.swing.JPanel panelEleccionAsientos;
     private javax.swing.JPanel panelHistorialCompras;
     private javax.swing.JPanel panelHorarios;
     private org.edisoncor.gui.panel.PanelImage panelImage1;
     private org.edisoncor.gui.panel.PanelImage panelImage3;
+    private org.edisoncor.gui.panel.PanelImage panelImage4;
     private javax.swing.JPanel panelInfoGeneral;
+    private org.edisoncor.gui.panel.PanelNice panelNice1;
     private javax.swing.JPanel panelOpcionesButton;
     private org.edisoncor.gui.panel.PanelImage panelPeliculas;
     private javax.swing.JPanel panelPrincipal;
     private javax.swing.JPanel panelSinopsis;
     private javax.swing.JTabbedPane panelsPelicula;
+    private javax.swing.JPanel pantalla;
     private javax.swing.JPanel sidePanel;
     private javax.swing.JLabel slider;
+    private javax.swing.JTable tableHorarios;
     // End of variables declaration//GEN-END:variables
-
-    
-        
+     
 }
