@@ -6,7 +6,6 @@
 package tecnm.tap.nubby_cinema;
 
 import java.awt.CardLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import javax.swing.JFrame;
 import java.awt.Image;
@@ -32,8 +31,10 @@ import org.json.simple.JSONObject;
 //import tecnm.tap.nubby_cinema.Networking.*;
 import com.google.gson.*;
 import com.github.kevinsawicki.http.HttpRequest;
+import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Graphics2D;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
@@ -165,7 +166,7 @@ public class Principal extends javax.swing.JFrame {
         sidePanel = new javax.swing.JPanel();
         panelImage3 = new org.edisoncor.gui.panel.PanelImage();
         
-        sidePanel.setBackground(new java.awt.Color(51, 51, 51));
+        sidePanel.setBackground(java.awt.Color.darkGray);
         sidePanel.setRequestFocusEnabled(false);
         
         panelImage3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tecnm/tap/nubby_cinema/Resources/Images/icons/search_icnon_48px.png"))); // NOI18N
@@ -180,35 +181,145 @@ public class Principal extends javax.swing.JFrame {
             panelImage3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
         );
-        
+        labelHideSideBar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tecnm/tap/nubby_cinema/Resources/Images/icons/icons8_back_to_24px.png"))); // NOI18N
+        labelHideSideBar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        labelHideSideBar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                labelHideSideBarMouseClicked(evt);
+            }
+        });
+
+        fieldBusqueda.setBackground(new java.awt.Color(51, 51, 51));
+        fieldBusqueda.setFont(new java.awt.Font("Leelawadee UI", 0, 12)); // NOI18N
+        fieldBusqueda.setForeground(new java.awt.Color(255, 255, 255));
+        fieldBusqueda.setAutoscrolls(false);
+        fieldBusqueda.setBorder(null);
+        fieldBusqueda.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                fieldBusquedaKeyTyped(evt);
+            }
+        });
+
+        panelBtnCuenta.setBackground(java.awt.Color.darkGray);
+        panelBtnCuenta.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        panelBtnCuenta.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                panelBtnCuentaMouseDragged(evt);
+            }
+        });
+        panelBtnCuenta.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                panelBtnCuentaMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                panelBtnCuentaMouseExited(evt);
+            }
+        });
+
+        labelMiCuenta.setFont(new java.awt.Font("Leelawadee UI", 1, 18)); // NOI18N
+        labelMiCuenta.setForeground(new java.awt.Color(204, 204, 204));
+        labelMiCuenta.setText("           Mi cuenta");
+        labelMiCuenta.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                labelMiCuentaMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                labelMiCuentaMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                labelMiCuentaMouseExited(evt);
+            }
+        });
+
+        labelUserIcon1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tecnm/tap/nubby_cinema/Resources/Images/icons/user_male.png"))); // NOI18N
+
+        javax.swing.GroupLayout panelBtnCuentaLayout = new javax.swing.GroupLayout(panelBtnCuenta);
+        panelBtnCuenta.setLayout(panelBtnCuentaLayout);
+        panelBtnCuentaLayout.setHorizontalGroup(
+            panelBtnCuentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelBtnCuentaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(labelUserIcon1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(labelMiCuenta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        panelBtnCuentaLayout.setVerticalGroup(
+            panelBtnCuentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelBtnCuentaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelBtnCuentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(labelMiCuenta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(panelBtnCuentaLayout.createSequentialGroup()
+                        .addComponent(labelUserIcon1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 14, Short.MAX_VALUE))))
+        );
+
+        panelBtnVerCatalogo.setBackground(java.awt.Color.darkGray);
+        panelBtnVerCatalogo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        panelBtnVerCatalogo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                panelBtnVerCatalogoMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                panelBtnVerCatalogoMouseExited(evt);
+            }
+        });
+
+        labelCarteleraIcon1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tecnm/tap/nubby_cinema/Resources/Images/icons/cartelera.png"))); // NOI18N
+
+        labelVerCatalogo.setFont(new java.awt.Font("Leelawadee UI", 1, 18)); // NOI18N
+        labelVerCatalogo.setForeground(new java.awt.Color(204, 204, 204));
+        labelVerCatalogo.setText("         Ver catálogo");
+        labelVerCatalogo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                labelVerCatalogoMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                labelVerCatalogoMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                labelVerCatalogoMouseExited(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panelBtnVerCatalogoLayout = new javax.swing.GroupLayout(panelBtnVerCatalogo);
+        panelBtnVerCatalogo.setLayout(panelBtnVerCatalogoLayout);
+        panelBtnVerCatalogoLayout.setHorizontalGroup(
+            panelBtnVerCatalogoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelBtnVerCatalogoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(labelCarteleraIcon1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(labelVerCatalogo, javax.swing.GroupLayout.DEFAULT_SIZE, 258, Short.MAX_VALUE))
+        );
+        panelBtnVerCatalogoLayout.setVerticalGroup(
+            panelBtnVerCatalogoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBtnVerCatalogoLayout.createSequentialGroup()
+                .addGap(0, 9, Short.MAX_VALUE)
+                .addComponent(labelCarteleraIcon1))
+            .addComponent(labelVerCatalogo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout sidePanelLayout = new javax.swing.GroupLayout(sidePanel);
         sidePanel.setLayout(sidePanelLayout);
         sidePanelLayout.setHorizontalGroup(
             sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(panelBtnVerCatalogo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(sidePanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(sidePanelLayout.createSequentialGroup()
-                        .addGroup(sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(sidePanelLayout.createSequentialGroup()
-                                .addGap(9, 9, 9)
-                                .addComponent(panelImage3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(fieldBusqueda, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
-                                    .addComponent(jSeparator1)))
-                            .addGroup(sidePanelLayout.createSequentialGroup()
-                                .addComponent(labelUserIcon)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(9, 9, 9)
+                        .addComponent(panelImage3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(fieldBusqueda, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
+                            .addComponent(jSeparator1))
                         .addGap(18, 18, 18)
                         .addComponent(labelHideSideBar))
-                    .addComponent(labelPeliculasIcon)
-                    .addGroup(sidePanelLayout.createSequentialGroup()
-                        .addComponent(labelCarteleraIcon)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnCartelera, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(labelPeliculasIcon))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(panelBtnCuenta, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         sidePanelLayout.setVerticalGroup(
             sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -222,18 +333,13 @@ public class Principal extends javax.swing.JFrame {
                             .addComponent(fieldBusqueda))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(76, 76, 76)
+                .addComponent(labelPeliculasIcon)
                 .addGap(18, 18, 18)
-                .addGroup(sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(labelUserIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(panelBtnCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(sidePanelLayout.createSequentialGroup()
-                        .addComponent(labelPeliculasIcon)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(labelCarteleraIcon))
-                    .addComponent(btnCartelera, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(panelBtnVerCatalogo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(453, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout panelPrincipalLayout = new javax.swing.GroupLayout(panelPrincipal);
@@ -266,12 +372,14 @@ public class Principal extends javax.swing.JFrame {
         panelImage3 = new org.edisoncor.gui.panel.PanelImage();
         labelHideSideBar = new javax.swing.JLabel();
         fieldBusqueda = new javax.swing.JTextField();
-        labelUserIcon = new javax.swing.JLabel();
-        btnCuenta = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         labelPeliculasIcon = new javax.swing.JLabel();
-        labelCarteleraIcon = new javax.swing.JLabel();
-        btnCartelera = new javax.swing.JButton();
+        panelBtnCuenta = new javax.swing.JPanel();
+        labelMiCuenta = new javax.swing.JLabel();
+        labelUserIcon1 = new javax.swing.JLabel();
+        panelBtnVerCatalogo = new javax.swing.JPanel();
+        labelCarteleraIcon1 = new javax.swing.JLabel();
+        labelVerCatalogo = new javax.swing.JLabel();
         panelOpcionesButton = new javax.swing.JPanel();
         panelCards = new javax.swing.JPanel();
         cardPrincipal = new javax.swing.JPanel();
@@ -408,7 +516,9 @@ public class Principal extends javax.swing.JFrame {
         jLabel40 = new javax.swing.JLabel();
         jLabel41 = new javax.swing.JLabel();
         labelConfirmarAsientos = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
+        cardBusqueda = new javax.swing.JPanel();
+        jsp1 = new javax.swing.JScrollPane();
+        panelPeliculasBusqueda = new org.edisoncor.gui.panel.PanelImage();
 
         jInternalFrame1.setVisible(true);
 
@@ -504,7 +614,7 @@ public class Principal extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        sidePanel.setBackground(new java.awt.Color(51, 51, 51));
+        sidePanel.setBackground(java.awt.Color.darkGray);
         sidePanel.setRequestFocusEnabled(false);
 
         panelImage3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tecnm/tap/nubby_cinema/Resources/Images/icons/search_icnon_48px.png"))); // NOI18N
@@ -539,70 +649,126 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
-        labelUserIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tecnm/tap/nubby_cinema/Resources/Images/icons/user_male.png"))); // NOI18N
-
-        btnCuenta.setBackground(new java.awt.Color(51, 51, 51));
-        btnCuenta.setFont(new java.awt.Font("Leelawadee UI", 0, 18)); // NOI18N
-        btnCuenta.setForeground(new java.awt.Color(255, 255, 255));
-        btnCuenta.setText("Mi cuenta");
-        btnCuenta.setBorder(null);
-        btnCuenta.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+        panelBtnCuenta.setBackground(java.awt.Color.darkGray);
+        panelBtnCuenta.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        panelBtnCuenta.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
-                btnCuentaMouseDragged(evt);
+                panelBtnCuentaMouseDragged(evt);
             }
         });
-        btnCuenta.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCuentaActionPerformed(evt);
+        panelBtnCuenta.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                panelBtnCuentaMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                panelBtnCuentaMouseExited(evt);
             }
         });
 
-        labelCarteleraIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tecnm/tap/nubby_cinema/Resources/Images/icons/cartelera.png"))); // NOI18N
+        labelMiCuenta.setFont(new java.awt.Font("Leelawadee UI", 1, 18)); // NOI18N
+        labelMiCuenta.setForeground(new java.awt.Color(204, 204, 204));
+        labelMiCuenta.setText("           Mi cuenta");
+        labelMiCuenta.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                labelMiCuentaMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                labelMiCuentaMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                labelMiCuentaMouseExited(evt);
+            }
+        });
 
-        btnCartelera.setBackground(new java.awt.Color(51, 51, 51));
-        btnCartelera.setFont(new java.awt.Font("Leelawadee UI", 0, 18)); // NOI18N
-        btnCartelera.setForeground(new java.awt.Color(255, 255, 255));
-        btnCartelera.setText("Ver catálogo");
-        btnCartelera.setBorder(null);
-        btnCartelera.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseDragged(java.awt.event.MouseEvent evt) {
-                btnCarteleraMouseDragged(evt);
+        labelUserIcon1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tecnm/tap/nubby_cinema/Resources/Images/icons/user_male.png"))); // NOI18N
+
+        javax.swing.GroupLayout panelBtnCuentaLayout = new javax.swing.GroupLayout(panelBtnCuenta);
+        panelBtnCuenta.setLayout(panelBtnCuentaLayout);
+        panelBtnCuentaLayout.setHorizontalGroup(
+            panelBtnCuentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelBtnCuentaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(labelUserIcon1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(labelMiCuenta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        panelBtnCuentaLayout.setVerticalGroup(
+            panelBtnCuentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelBtnCuentaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelBtnCuentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(labelMiCuenta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(panelBtnCuentaLayout.createSequentialGroup()
+                        .addComponent(labelUserIcon1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 14, Short.MAX_VALUE))))
+        );
+
+        panelBtnVerCatalogo.setBackground(java.awt.Color.darkGray);
+        panelBtnVerCatalogo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        panelBtnVerCatalogo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                panelBtnVerCatalogoMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                panelBtnVerCatalogoMouseExited(evt);
             }
         });
-        btnCartelera.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCarteleraActionPerformed(evt);
+
+        labelCarteleraIcon1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tecnm/tap/nubby_cinema/Resources/Images/icons/cartelera.png"))); // NOI18N
+
+        labelVerCatalogo.setFont(new java.awt.Font("Leelawadee UI", 1, 18)); // NOI18N
+        labelVerCatalogo.setForeground(new java.awt.Color(204, 204, 204));
+        labelVerCatalogo.setText("         Ver catálogo");
+        labelVerCatalogo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                labelVerCatalogoMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                labelVerCatalogoMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                labelVerCatalogoMouseExited(evt);
             }
         });
+
+        javax.swing.GroupLayout panelBtnVerCatalogoLayout = new javax.swing.GroupLayout(panelBtnVerCatalogo);
+        panelBtnVerCatalogo.setLayout(panelBtnVerCatalogoLayout);
+        panelBtnVerCatalogoLayout.setHorizontalGroup(
+            panelBtnVerCatalogoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelBtnVerCatalogoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(labelCarteleraIcon1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(labelVerCatalogo, javax.swing.GroupLayout.DEFAULT_SIZE, 258, Short.MAX_VALUE))
+        );
+        panelBtnVerCatalogoLayout.setVerticalGroup(
+            panelBtnVerCatalogoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBtnVerCatalogoLayout.createSequentialGroup()
+                .addGap(0, 9, Short.MAX_VALUE)
+                .addComponent(labelCarteleraIcon1))
+            .addComponent(labelVerCatalogo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout sidePanelLayout = new javax.swing.GroupLayout(sidePanel);
         sidePanel.setLayout(sidePanelLayout);
         sidePanelLayout.setHorizontalGroup(
             sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(panelBtnVerCatalogo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(sidePanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(sidePanelLayout.createSequentialGroup()
-                        .addGroup(sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(sidePanelLayout.createSequentialGroup()
-                                .addGap(9, 9, 9)
-                                .addComponent(panelImage3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(fieldBusqueda, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
-                                    .addComponent(jSeparator1)))
-                            .addGroup(sidePanelLayout.createSequentialGroup()
-                                .addComponent(labelUserIcon)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(9, 9, 9)
+                        .addComponent(panelImage3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(fieldBusqueda, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
+                            .addComponent(jSeparator1))
                         .addGap(18, 18, 18)
                         .addComponent(labelHideSideBar))
-                    .addComponent(labelPeliculasIcon)
-                    .addGroup(sidePanelLayout.createSequentialGroup()
-                        .addComponent(labelCarteleraIcon)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnCartelera, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(labelPeliculasIcon))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(panelBtnCuenta, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         sidePanelLayout.setVerticalGroup(
             sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -616,17 +782,12 @@ public class Principal extends javax.swing.JFrame {
                             .addComponent(fieldBusqueda))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(76, 76, 76)
+                .addComponent(labelPeliculasIcon)
                 .addGap(18, 18, 18)
-                .addGroup(sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(labelUserIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(panelBtnCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(sidePanelLayout.createSequentialGroup()
-                        .addComponent(labelPeliculasIcon)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(labelCarteleraIcon))
-                    .addComponent(btnCartelera, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(panelBtnVerCatalogo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -1303,6 +1464,8 @@ public class Principal extends javax.swing.JFrame {
             .addGap(0, 186, Short.MAX_VALUE)
         );
 
+        jScrollPane3.setBackground(new java.awt.Color(255, 255, 255));
+
         tableHistorial.setBackground(new java.awt.Color(255, 255, 255));
         tableHistorial.setFont(new java.awt.Font("Leelawadee UI", 1, 14)); // NOI18N
         tableHistorial.setModel(new javax.swing.table.DefaultTableModel(
@@ -1328,7 +1491,8 @@ public class Principal extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tableHistorial.setGridColor(new java.awt.Color(102, 102, 102));
+        tableHistorial.setGridColor(new java.awt.Color(255, 255, 255));
+        tableHistorial.setRowHeight(22);
         jScrollPane3.setViewportView(tableHistorial);
 
         comboOrderBt.setFont(new java.awt.Font("Leelawadee UI", 1, 14)); // NOI18N
@@ -1809,18 +1973,22 @@ public class Principal extends javax.swing.JFrame {
 
         panelCards.add(cardConfirmar, "cardConfirmar");
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 986, Short.MAX_VALUE)
+        panelPeliculasBusqueda.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tecnm/tap/nubby_cinema/Resources/Images/fondoCartelera1080.png"))); // NOI18N
+        panelPeliculasBusqueda.setLayout(new java.awt.GridLayout(1, 0, 10, 0));
+        jsp1.setViewportView(panelPeliculasBusqueda);
+
+        javax.swing.GroupLayout cardBusquedaLayout = new javax.swing.GroupLayout(cardBusqueda);
+        cardBusqueda.setLayout(cardBusquedaLayout);
+        cardBusquedaLayout.setHorizontalGroup(
+            cardBusquedaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jsp1, javax.swing.GroupLayout.DEFAULT_SIZE, 986, Short.MAX_VALUE)
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 737, Short.MAX_VALUE)
+        cardBusquedaLayout.setVerticalGroup(
+            cardBusquedaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jsp1, javax.swing.GroupLayout.DEFAULT_SIZE, 737, Short.MAX_VALUE)
         );
 
-        panelCards.add(jPanel3, "cardTest");
+        panelCards.add(cardBusqueda, "cardBusqueda");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -1857,34 +2025,6 @@ public class Principal extends javax.swing.JFrame {
         panelPrincipal.repaint();
         showLabelOptions();
     }//GEN-LAST:event_labelHideSideBarMouseClicked
-
-    private void btnCuentaMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCuentaMouseDragged
-       
-    }//GEN-LAST:event_btnCuentaMouseDragged
-
-    private void btnCarteleraMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCarteleraMouseDragged
-       
-    }//GEN-LAST:event_btnCarteleraMouseDragged
-
-    private void btnCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCuentaActionPerformed
-        DefaultTableModel dtm2 = (DefaultTableModel) tableHistorial.getModel();
-        dtm2.setRowCount(0);
-        if(!logedIn){
-            cards.show(panelCards, "cardCuenta");
-        }
-        else{
-            cargarUsuario(usuario,false);
-            cargarHistorial("Número de boleto");
-        }
-    }//GEN-LAST:event_btnCuentaActionPerformed
-
-    private void btnCarteleraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCarteleraActionPerformed
-        cards.show(panelCards, "cardCartelera");
-        DefaultTableModel dtm = (DefaultTableModel) tableHorarios.getModel();
-        dtm.setRowCount(0);
-        DefaultTableModel dtm2 = (DefaultTableModel) tableHistorial.getModel();
-        dtm2.setRowCount(0);
-    }//GEN-LAST:event_btnCarteleraActionPerformed
 
     private void labelLogoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelLogoMouseClicked
         cards.show(panelCards, "cardPrincipal");
@@ -2038,6 +2178,62 @@ public class Principal extends javax.swing.JFrame {
         ThreadBusqueda hilo = new ThreadBusqueda();
         hilo.execute();
     }//GEN-LAST:event_fieldBusquedaKeyTyped
+
+    private void panelBtnCuentaMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelBtnCuentaMouseDragged
+        //jPanel4.setBackground(Color.BLACK);
+    }//GEN-LAST:event_panelBtnCuentaMouseDragged
+
+    private void panelBtnCuentaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelBtnCuentaMouseEntered
+        panelBtnCuenta.setBackground(Color.BLACK);
+    }//GEN-LAST:event_panelBtnCuentaMouseEntered
+
+    private void panelBtnCuentaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelBtnCuentaMouseExited
+        panelBtnCuenta.setBackground(Color.DARK_GRAY);
+    }//GEN-LAST:event_panelBtnCuentaMouseExited
+
+    private void panelBtnVerCatalogoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelBtnVerCatalogoMouseEntered
+        panelBtnVerCatalogo.setBackground(Color.BLACK);
+    }//GEN-LAST:event_panelBtnVerCatalogoMouseEntered
+
+    private void panelBtnVerCatalogoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelBtnVerCatalogoMouseExited
+        panelBtnVerCatalogo.setBackground(Color.DARK_GRAY);
+    }//GEN-LAST:event_panelBtnVerCatalogoMouseExited
+
+    private void labelMiCuentaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelMiCuentaMouseClicked
+        DefaultTableModel dtm2 = (DefaultTableModel) tableHistorial.getModel();
+        dtm2.setRowCount(0);
+        if(!logedIn){
+            cards.show(panelCards, "cardCuenta");
+        }
+        else{
+            cargarUsuario(usuario,false);
+            cargarHistorial("Número de boleto");
+        }
+    }//GEN-LAST:event_labelMiCuentaMouseClicked
+
+    private void labelVerCatalogoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelVerCatalogoMouseClicked
+        cards.show(panelCards, "cardCartelera");
+        DefaultTableModel dtm = (DefaultTableModel) tableHorarios.getModel();
+        dtm.setRowCount(0);
+        DefaultTableModel dtm2 = (DefaultTableModel) tableHistorial.getModel();
+        dtm2.setRowCount(0);
+    }//GEN-LAST:event_labelVerCatalogoMouseClicked
+
+    private void labelMiCuentaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelMiCuentaMouseEntered
+        panelBtnCuenta.setBackground(Color.BLACK);
+    }//GEN-LAST:event_labelMiCuentaMouseEntered
+
+    private void labelMiCuentaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelMiCuentaMouseExited
+        panelBtnCuenta.setBackground(Color.DARK_GRAY);
+    }//GEN-LAST:event_labelMiCuentaMouseExited
+
+    private void labelVerCatalogoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelVerCatalogoMouseEntered
+        panelBtnVerCatalogo.setBackground(Color.BLACK);
+    }//GEN-LAST:event_labelVerCatalogoMouseEntered
+
+    private void labelVerCatalogoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelVerCatalogoMouseExited
+        panelBtnVerCatalogo.setBackground(Color.DARK_GRAY);
+    }//GEN-LAST:event_labelVerCatalogoMouseExited
     
     private void labelReturnSideBarMouseClicked(MouseEvent evt) {
         showSideBar();
@@ -2216,7 +2412,7 @@ public class Principal extends javax.swing.JFrame {
         String categoria = String.valueOf(pelicula.get("categoria").toString().substring(1,pelicula.get("categoria").toString().length()-1));
         String director = String.valueOf(pelicula.get("director").toString().substring(1,pelicula.get("director").toString().length()-1));
         String sinopsis = String.valueOf(pelicula.get("Sinopsis").toString().substring(1,pelicula.get("Sinopsis").toString().length()-1));
-        String genero = data.get("genero").toString().substring(1,data.get("genero").toString().length()-1);
+        String genero = data.get("genero").toString().substring (1,data.get("genero").toString().length()-1);
         
         System.out.println("Se seleccionó: "+nombrePelicula);
         ImageIcon img = new ImageIcon(getClass().getResource("/tecnm/tap/nubby_cinema/Resources/Images/BannerPeliculas/"+nombrePelicula+"1.png"));
@@ -2466,13 +2662,18 @@ public class Principal extends javax.swing.JFrame {
             this.label = label;
             this.pelicula = pelicula;
         }
+        public PortadaListener(int id, JLabel label, JsonObject pelicula, boolean override) {
+            this.id = id;
+            this.label = label;
+            this.pelicula = pelicula;
+        }
         
        
         @Override
         public void mouseClicked(MouseEvent e) {
             if(e.getSource() == label){
                 //JOptionPane.showMessageDialog(null, "Datos de la pelicula: \n"+pelicula.get("nombre_pelicula"));
-                System.out.println("Id: "+id+"\n"+pelicula.toString());
+                System.out.println("Id Pelicula: "+id+"\n"+pelicula.toString());
                 SeleccionarPelicula(id, pelicula);
             }
         }
@@ -2605,8 +2806,16 @@ public class Principal extends javax.swing.JFrame {
 
         @Override
         protected Object doInBackground() throws Exception {
-            while (true) {                
+            panelPeliculasBusqueda.removeAll();
+                    GridLayout grid = new GridLayout(1, 0, 10, 0);
+                    
+            while (true) {          
+                
                 if(!fieldBusqueda.getText().isBlank()){
+                    
+                    panelPeliculasBusqueda.setLayout(grid);
+                    panelPeliculasBusqueda.repaint();
+                    
                     String query = "qry=SELECT * FROM peliculas WHERE nombre_pelicula LIKE '"+fieldBusqueda.getText()+"%'";
                     String response = HttpRequest.post("http://localhost:80/Phpfiles/inner_join.php").send(query).body(); 
                     JsonObject jsonRecived = new JsonParser().parse(response).getAsJsonObject();
@@ -2617,8 +2826,16 @@ public class Principal extends javax.swing.JFrame {
                     for (int i = 0; i < output.size(); i++) {
                         JsonObject pelicula = output.getAsJsonObject(""+i);
                         publish(pelicula);
+                       
                     }
+                    
                    break;
+                }else{
+                    
+                    panelPeliculasBusqueda.setLayout(grid);
+                    panelPeliculasBusqueda.repaint();
+                    
+                    
                 }
             }
             
@@ -2627,18 +2844,34 @@ public class Principal extends javax.swing.JFrame {
 
         @Override
         protected void process(List chunks) {
-            //super.process(chunks); //To change body of generated methods, choose Tools | Templates.
-            
             for (int i = 0; i < chunks.size(); i++) {
-                System.out.println("chunks:: i"+chunks.get(i));
                 
+                JsonObject pelicula = new JsonParser().parse(chunks.get(i).toString()).getAsJsonObject();
+                System.out.println("chunks:: "+i+": "+pelicula.get("nombre_pelicula"));
+                JLabel portada = new JLabel();
+                int id = pelicula.get("id_pelicula").getAsInt();
+                System.out.println("id:: "+id);
+                portada.setSize(215, 319);
+                String a = pelicula.get("nombre_pelicula").toString();
+                String b = a.substring(1,a.length()-1);
+                portada.setIcon(new ImageIcon("C:\\Cine\\Nubby_Cinema\\src\\main\\java\\tecnm\\tap\\nubby_cinema\\Resources\\Images\\Portadas Peliculas\\"+b+".png"));
+                portada.setCursor(new Cursor(HAND_CURSOR));
+                portada.addMouseListener(new PortadaListener(id, portada, pelicula,true));
+
+                panelPeliculasBusqueda.add(portada);
             }
-            cards.show(panelCards, "cardTest");
+            panelPeliculasBusqueda.repaint();
+            cards.show(panelCards, "cardBusqueda");
+            GridLayout grid = new GridLayout(1, 0, 10, 0);
+            panelPeliculasBusqueda.setLayout(grid);
+            panelPeliculasBusqueda.repaint();
+
         }
 
         @Override
         protected void done() {
             super.done(); //To change body of generated methods, choose Tools | Templates.
+           
             System.out.println("FIN DE HILO BUSQUEDA");
         }
         
@@ -2655,15 +2888,14 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JTextArea areaSinopsis;
     private org.edisoncor.gui.panel.PanelImage bannerPelicula;
     private javax.swing.JCheckBox boxSesion;
-    private javax.swing.JButton btnCartelera;
     private javax.swing.JButton btnComprarBoleto;
     private javax.swing.JButton btnConfirmarAsientos;
     private javax.swing.JButton btnConfirmarCompra;
-    private javax.swing.JButton btnCuenta;
     private javax.swing.JButton btnLogin;
     private javax.swing.JButton btnRegistro;
     private javax.swing.JTabbedPane cardAcceso;
     private javax.swing.JPanel cardAsientos;
+    private javax.swing.JPanel cardBusqueda;
     private javax.swing.JPanel cardCartelera;
     private javax.swing.JPanel cardConfirmar;
     private javax.swing.JPanel cardCuenta;
@@ -2732,7 +2964,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
@@ -2751,8 +2982,9 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator8;
     private javax.swing.JSeparator jSeparator9;
     private javax.swing.JScrollPane jsp;
+    private javax.swing.JScrollPane jsp1;
     private javax.swing.JLabel labelBoletosElegidos;
-    private javax.swing.JLabel labelCarteleraIcon;
+    private javax.swing.JLabel labelCarteleraIcon1;
     private javax.swing.JLabel labelCategoriaPelicula;
     private javax.swing.JLabel labelClose;
     private javax.swing.JLabel labelConfirmarAsientos;
@@ -2771,6 +3003,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel labelLeft;
     private javax.swing.JLabel labelLogo;
     private javax.swing.JLabel labelMaximize;
+    private javax.swing.JLabel labelMiCuenta;
     private javax.swing.JLabel labelMinimize;
     private javax.swing.JLabel labelNavBar;
     private javax.swing.JLabel labelNombrePelicula;
@@ -2783,9 +3016,12 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel labelRight;
     private javax.swing.JLabel labelToLogin;
     private javax.swing.JLabel labelTwitter;
-    private javax.swing.JLabel labelUserIcon;
+    private javax.swing.JLabel labelUserIcon1;
+    private javax.swing.JLabel labelVerCatalogo;
     private javax.swing.JLabel lessBoleto;
     private javax.swing.JPanel navBar;
+    private javax.swing.JPanel panelBtnCuenta;
+    private javax.swing.JPanel panelBtnVerCatalogo;
     private javax.swing.JPanel panelCards;
     private javax.swing.JPanel panelConfirmarCompra;
     private org.edisoncor.gui.panel.PanelImage panelConfirmarPelicula;
@@ -2799,6 +3035,7 @@ public class Principal extends javax.swing.JFrame {
     private org.edisoncor.gui.panel.PanelNice panelNice1;
     private javax.swing.JPanel panelOpcionesButton;
     private org.edisoncor.gui.panel.PanelImage panelPeliculas;
+    private org.edisoncor.gui.panel.PanelImage panelPeliculasBusqueda;
     private javax.swing.JPanel panelPrincipal;
     private javax.swing.JPanel panelSinopsis;
     private javax.swing.JTabbedPane panelsPelicula;

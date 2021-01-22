@@ -127,7 +127,7 @@ class ManejadorBD {
 		return $this->result;
 	}
 	
-	public function InnerJoin($qry) {
+	public function findByQuery($qry) {
 		try {
 			$link = $this->open();
 			//SELECT peliculas.nombre_pelicula, generos.genero FROM peliculas INNER JOIN generos ON peliculas.id_genero=generos.id_genero 
